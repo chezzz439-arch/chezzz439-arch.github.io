@@ -288,9 +288,6 @@ p{margin:0 0 1.05em;}
 .also__meta a:hover,.also__meta a:focus-visible{text-decoration:underline;}
 .also{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;margin-top:clamp(1.6rem,3.5vw,2.2rem);}
 .also__item{border:1px solid var(--line-soft);background:var(--card);padding:1.4rem;}
-.also__item--fig{grid-column:span 2;display:grid;grid-template-columns:1.15fr 1fr;gap:1.3rem;align-items:start;}
-.also__item--fig img{grid-row:1/span 3;width:100%;height:auto;display:block;border:1px solid var(--line-soft);background:var(--paper-2);}
-@media(max-width:760px){.also__item--fig{grid-column:span 1;grid-template-columns:1fr;}.also__item--fig img{grid-row:auto;}}
 .also__item h4{font-family:var(--display);font-size:1.18rem;font-weight:400;letter-spacing:-.015em;margin-bottom:.3rem;}
 .also__meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);display:block;margin-bottom:.7rem;}
 .also__item p{margin:0;font-size:1.06rem;color:#2B3134;line-height:1.6;}
@@ -503,7 +500,7 @@ html.js .reveal.in{opacity:1;transform:none;}
     <div class="wrap">
       <div class="sec__head reveal">
         <p class="eyebrow">Selected work</p>
-        <h2>Four systems, judged on what they do unattended.</h2>
+        <h2>Five systems, judged on what they do unattended.</h2>
         <p>Each one shows the pipeline as it actually runs. Everything else is listed below.</p>
       </div>
 
@@ -625,6 +622,53 @@ html.js .reveal.in{opacity:1;transform:none;}
           </details>
         </article>
 
+        <!-- Conjure + Morph-Forge -->
+        <article class="proj__item reveal" id="p-conjure">
+          <div class="proj__top">
+            <span class="proj__idx">03</span>
+            <div>
+              <div class="proj__title">
+                <h3>Conjure &amp; Morph-Forge</h3>
+                <span class="proj__lang">Voice &amp; agent → 3D print</span>
+                <span class="badge">No human after the first press</span>
+              </div>
+              <p class="proj__sum">Speak a description, walk away, pick up a printed part. Nobody is in the loop after the first button press. Conjure is the kiosk; Morph-Forge is the engineering agent behind it.</p>
+              <p class="chain-label">Kiosk: anyone walks up</p>
+              <ol class="chain">
+                <li>speak it</li><li>Meshy AI model</li><li>Three.js preview</li><li>slice</li><li>USB → Neptune 4 Pro</li>
+              </ol>
+              <p class="chain-label">Morph-Forge: the engineering agent</p>
+              <ol class="chain">
+                <li>Kite AI auth</li><li>You.com + Tavily specs</li><li>Llama-70B writes OpenSCAD</li><li>render + slice</li><li>Moonraker dispatch</li><li>structural review</li>
+              </ol>
+              <div class="proj__media">
+                <figure class="proj__fig">
+                  <img src="images/conjure-kiosk.jpg" width="1200" height="663" loading="lazy" alt="The Conjure kiosk screen: two modes, Speak or type for a quick model and Engineer a part for a dimensioned build, over a pipeline strip reading describe, generate, inspect, print." />
+                  <figcaption>The kiosk itself. Two modes on one printer: speak it, or have the agent engineer it.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <a class="proj__link" href="https://github.com/chezzz439-arch/Conjure" rel="noopener">GitHub ↗</a>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>Two paths, one printer</h5>
+                <p>The kiosk runs on an Orange Pi 5 Pro: hold the mic, describe an object, and Meshy returns a model that spins in Three.js while ElevenLabs narrates. Morph-Forge takes the harder route. It looks up real pipe dimensions and PLA tensile figures with citations first, so Llama-3.3-70B writes parametric OpenSCAD against measured numbers rather than hallucinated ones, then reviews its own output before printing.</p>
+              </div>
+              <div class="story__col">
+                <h5>The failure mode I documented instead of hiding</h5>
+                <p>Both modes write to the same scratch gcode path, so a second kiosk tab wipes a finished build. Instead of papering over it, the export endpoint re-checks the file on disk rather than trusting an in-memory flag. The failure surfaces as a clean 409, never as a USB stick holding the wrong object. The real fix is per-build paths, and the README says it's deferred.</p>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">Orange Pi 5 Pro</span><span class="tag">Meshy AI</span><span class="tag">Three.js</span><span class="tag">OpenSCAD</span><span class="tag">CuraEngine</span><span class="tag">OrcaSlicer</span><span class="tag">Moonraker</span><span class="tag">Nebius Llama-3.3-70B</span><span class="tag">You.com</span><span class="tag">Tavily</span><span class="tag">ElevenLabs</span><span class="tag">InsForge</span><span class="tag">Kite AI</span><span class="tag">Topify</span></div>
+              </div>
+            </div>
+          </details>
+        </article>
+
 
 
 
@@ -634,7 +678,7 @@ html.js .reveal.in{opacity:1;transform:none;}
         <!-- VIGIL -->
         <article class="proj__item reveal" id="p-vigil">
           <div class="proj__top">
-            <span class="proj__idx">03</span>
+            <span class="proj__idx">04</span>
             <div>
               <div class="proj__title">
                 <h3>VIGIL</h3>
@@ -675,7 +719,7 @@ html.js .reveal.in{opacity:1;transform:none;}
         <!-- DealGhost -->
         <article class="proj__item reveal" id="p-dealghost">
           <div class="proj__top">
-            <span class="proj__idx">04</span>
+            <span class="proj__idx">05</span>
             <div>
               <div class="proj__title">
                 <h3>DealGhost</h3>
@@ -721,12 +765,6 @@ html.js .reveal.in{opacity:1;transform:none;}
         <p>Shipped, running, or in progress. Depth lives in the repos.</p>
       </div>
       <div class="also reveal">
-        <div class="also__item also__item--fig" id="p-conjure">
-          <img src="images/conjure-kiosk.jpg" width="1200" height="663" loading="lazy" alt="The Conjure kiosk screen: two modes, Speak or type for a quick model and Engineer a part for a dimensioned build, over a pipeline strip reading describe, generate, inspect, print." />
-          <h4>Conjure &amp; Morph-Forge</h4>
-          <span class="also__meta">Orange Pi 5 Pro &middot; Meshy AI &middot; OpenSCAD &middot; <a href="https://github.com/chezzz439-arch/Conjure" rel="noopener">GitHub &#8599;</a></span>
-          <p>Speak a description, walk away, pick up the printed part. A walk-up kiosk plus an agent that writes parametric OpenSCAD against real material specs before it commits to a print.</p>
-        </div>
         <div class="also__item" id="p-assistview">
           <h4>AssistView</h4>
           <span class="also__meta">React Native &middot; On-device CV &middot; <a href="https://assistview.butterbase.dev" rel="noopener">Live &#8599;</a> &middot; <a href="https://github.com/chezzz439-arch/assistview" rel="noopener">GitHub &#8599;</a></span>
