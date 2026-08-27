@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kaushik Chekka | Autonomous Systems &amp; Security</title>
+<meta name="description" content="Kaushik Chekka builds agents that finish the job unattended: autonomous quant trading, compliance bots that merge their own PRs, voice-to-3D-print pipelines, and on-device accessibility vision." />
+<link rel="canonical" href="https://chezzz439-arch.github.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://chezzz439-arch.github.io/" />
+<meta property="og:title" content="Kaushik Chekka | Autonomous Systems &amp; Security" />
+<meta property="og:description" content="Agents that finish the job unattended: a quant fund validated at p=0.001, a compliance agent that merges its own PRs, a $15 braille keyboard, and a behavioral diff engine for agent-written code." />
+<meta property="og:image" content="https://chezzz439-arch.github.io/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://chezzz439-arch.github.io/og.png" />
+<meta name="theme-color" content="#F4F1EA" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F4F1EA'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%231F5C4A'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%238F5215' stroke-width='1.5' stroke-dasharray='3 4'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS: warm paper ground, deep green accent
+   ============================================================ */
+:root{
+  --paper:#F4F1EA;
+  --paper-2:#FBF9F4;
+  --card:#FFFFFF;
+  --ink:#14191F;
+  --muted:#555C5B;
+  --dim-2:#666D6B;
+  --line:#CFC8BA;
+  --line-soft:#E2DCD0;
+  --accent:#1F5C4A;
+  --accent-dark:#143E31;
+  --signal:#8F5215;
+
+  --display:'Instrument Serif',Georgia,serif;
+  --body:'Newsreader',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+
+  --gutter:clamp(1.15rem,4.5vw,4.5rem);
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:clamp(1.1rem,1.02rem + .4vw,1.25rem);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(900px 520px at 78% -8%, rgba(31,92,74,.055), transparent 62%),
+    radial-gradient(700px 480px at 6% 4%, rgba(143,82,21,.045), transparent 60%);
+}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+section[id],header[id],main[id],article[id]{scroll-margin-top:80px;}
+::selection{background:var(--accent);color:var(--paper-2);}
+
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter);position:relative;z-index:1;}
+
+/* ============================================================
+   TYPE
+   ============================================================ */
+h1,h2,h3,h4{font-family:var(--display);font-weight:400;letter-spacing:-.012em;line-height:1.06;margin:0;text-wrap:balance;}
+h1{font-size:clamp(2.4rem,1.35rem + 4.3vw,4.35rem);font-weight:400;}
+h2{font-size:clamp(1.95rem,1.25rem + 2.7vw,3.15rem);}
+h3{font-size:clamp(1.4rem,1.1rem + 1.05vw,1.9rem);letter-spacing:-.01em;}
+p{margin:0 0 1.05em;}
+.lede{font-size:clamp(1.24rem,1.05rem + .8vw,1.6rem);color:#2B3134;line-height:1.55;font-weight:500;}
+.eyebrow{
+  font-family:var(--mono);font-size:.7rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:.7rem;margin:0 0 1.4rem;
+}
+.eyebrow::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent);}
+.eyebrow--name{font-weight:700;letter-spacing:.24em;}
+.eyebrow--name::after{display:none;}
+.mono{font-family:var(--mono);}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(244,241,234,.82);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:60px;}
+.nav__mark{
+  font-family:var(--mono);font-size:.78rem;font-weight:600;letter-spacing:.16em;
+  text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:.55rem;
+}
+.nav__dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(31,92,74,.15);}
+.nav__links{display:flex;gap:1.5rem;}
+.nav__links a{
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .18s;
+}
+.nav__links a:hover,.nav__links a:focus-visible{color:var(--accent);}
+@media(max-width:820px){.nav__links{gap:1rem;}.nav__links a{font-size:.66rem;letter-spacing:.06em;}}
+@media(max-width:560px){
+  /* wrap the nav onto two rows rather than hiding destinations */
+  .nav__in{align-items:flex-start;height:auto;padding-block:.6rem;}
+  .nav__links{flex-wrap:wrap;justify-content:flex-end;gap:.45rem 1rem;max-width:16rem;}
+  .nav__links a{font-size:.62rem;}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{padding:clamp(3rem,8vw,5.6rem) 0 clamp(2.2rem,5vw,3.2rem);}
+.hero__grid{display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(2.2rem,7vw,5.5rem);align-items:center;}
+.hero h1{max-width:22ch;}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero__sub{max-width:56ch;margin-top:1.7rem;}
+.hero__cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.1rem;}
+/* mounted print: paper mat + rule around the photo, caption block inside the frame */
+.hero__photo{
+  position:relative;margin:0;
+  background:var(--paper-2);
+  padding:.7rem;
+  border:1px solid var(--line);
+  box-shadow:0 1px 0 var(--line-soft), 0 18px 34px -26px rgba(20,25,31,.55);
+}
+.hero__photo img{width:100%;height:auto;display:block;border:1px solid var(--line-soft);}
+.hero__photo figcaption{
+  font-family:var(--body);font-size:.86rem;line-height:1.55;
+  color:#333A3D;margin-top:.75rem;padding-top:.7rem;border-top:1px solid var(--line-soft);
+}
+.hero__now{
+  display:block;font-family:var(--mono);font-size:.6rem;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--signal);margin-bottom:.4rem;
+}
+@media(max-width:820px){
+  .hero__grid{grid-template-columns:1fr;}
+  .hero__photo{max-width:340px;order:-1;}
+}
+
+.btn{
+  font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;padding:.8rem 1.25rem;border:1px solid var(--line);
+  color:var(--ink);background:var(--paper-2);
+  transition:background .18s,border-color .18s,color .18s,transform .18s;
+}
+.btn:hover,.btn:focus-visible{border-color:var(--ink);transform:translateY(-1px);}
+.btn--primary{background:var(--accent);border-color:var(--accent);color:#F4F1EA;font-weight:600;}
+.btn--primary:hover,.btn--primary:focus-visible{background:var(--accent-dark);border-color:var(--accent-dark);color:#F4F1EA;}
+
+/* --- signature: the run panel --- */
+.run{
+  margin-top:clamp(2.4rem,5.5vw,3.6rem);
+  border:1px solid var(--line);
+  background:var(--card);
+  position:relative;overflow:hidden;
+}
+.run__bar{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.7rem 1rem;border-bottom:1px solid var(--line-soft);background:var(--paper-2);
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+}
+.run__id{display:flex;align-items:center;gap:.6rem;color:var(--ink);}
+.run__live{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.9s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(31,92,74,.45);}50%{opacity:.55;box-shadow:0 0 0 6px rgba(31,92,74,0);}}
+.run__body{padding:clamp(1.1rem,3vw,1.7rem) clamp(1rem,3vw,1.7rem) clamp(1.2rem,3vw,1.6rem);}
+.run__steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:stretch;gap:.5rem;}
+.run__step{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.01em;
+  border:1px solid var(--line-soft);padding:.55rem .8rem;color:var(--dim-2);
+  display:flex;align-items:center;gap:.5rem;background:var(--paper-2);
+  opacity:0;transform:translateY(5px);transition:opacity .34s ease,transform .34s ease,color .34s,border-color .34s;
+}
+.run__step.on{opacity:1;transform:none;color:var(--ink);border-color:rgba(31,92,74,.45);}
+.run__step .n{color:var(--accent);font-size:.66rem;}
+.run__step--human{
+  border-style:dashed;border-color:rgba(143,82,21,.5);color:var(--signal);
+  opacity:1;transform:none;background:rgba(143,82,21,.05);
+}
+.run__foot{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.45rem .9rem;
+  margin-top:1.15rem;padding-top:1rem;border-top:1px dashed var(--line);
+  font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.06em;
+}
+.run__foot b{color:var(--signal);font-weight:600;font-size:.95rem;}
+.run__note{font-family:var(--body);font-size:.95rem;color:var(--muted);letter-spacing:0;}
+
+/* ============================================================
+   LEDGER
+   ============================================================ */
+.ledger{border-block:1px solid var(--line);margin-top:clamp(2.4rem,5.5vw,3.6rem);background:var(--paper-2);}
+.ledger__grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.ledger__cell{padding:clamp(1.3rem,3vw,1.9rem) clamp(.7rem,2vw,1.4rem);border-left:1px solid var(--line-soft);}
+.ledger__cell:first-child{border-left:0;padding-left:0;}
+.ledger__n{font-family:var(--display);font-size:clamp(1.6rem,1.15rem + 1.8vw,2.55rem);font-weight:400;letter-spacing:-.03em;line-height:1;}
+.ledger__n span{color:var(--accent);}
+.ledger__l{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--dim-2);margin-top:.6rem;display:block;line-height:1.5;}
+@media(max-width:700px){
+  .ledger__grid{grid-template-columns:repeat(2,1fr);}
+  .ledger__cell:nth-child(3){border-left:0;padding-left:0;}
+  .ledger__cell:nth-child(-n+2){border-bottom:1px solid var(--line-soft);}
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.sec{padding:clamp(3.4rem,8vw,5.8rem) 0;}
+.sec--tight{padding-block:clamp(2.8rem,6.5vw,4.6rem);}
+.sec__head{max-width:62ch;margin-bottom:clamp(2rem,4.5vw,3.2rem);}
+.sec__head p{color:var(--muted);}
+
+/* about */
+.about__grid{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:start;}
+.about__grid p{color:#2E3438;}
+.card-quiet{border:1px solid var(--line);padding:1.5rem;background:var(--card);}
+.card-quiet h4{font-size:.72rem;font-family:var(--mono);font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.kv{display:flex;justify-content:space-between;gap:1rem;padding:.6rem 0;border-top:1px solid var(--line-soft);font-family:var(--mono);font-size:.78rem;margin:0;}
+.kv:first-of-type{border-top:0;padding-top:0;}
+.kv dt{color:var(--dim-2);}
+.kv dd{margin:0;color:var(--ink);text-align:right;}
+@media(max-width:860px){.about__grid{grid-template-columns:1fr;}}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.proj{border-top:1px solid var(--line);}
+.proj__item{border-bottom:1px solid var(--line);padding:clamp(1.6rem,4vw,2.5rem) 0;}
+.proj__top{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(1rem,3vw,2.4rem);align-items:baseline;}
+.proj__idx{font-family:var(--mono);font-size:.72rem;color:var(--dim-2);letter-spacing:.1em;padding-top:.45rem;}
+.proj__title{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem .9rem;}
+.proj__lang{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim-2);}
+.jump{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 clamp(2rem,4vw,3rem);
+  padding-bottom:clamp(1.4rem,3vw,2rem);border-bottom:1px solid var(--line-soft);}
+.jump a{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim-2);text-decoration:none;border:1px solid var(--line-soft);background:var(--card);
+  padding:.44rem .7rem;transition:color .18s,border-color .18s;}
+.jump a:hover,.jump a:focus-visible{color:var(--accent);border-color:var(--accent);}
+.proj__sum{margin:.85rem 0 0;color:#272D31;max-width:64ch;font-size:clamp(1.14rem,1rem + .55vw,1.34rem);line-height:1.58;font-weight:500;}
+.badge{
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid rgba(143,82,21,.5);color:var(--signal);
+  padding:.3rem .55rem;white-space:nowrap;background:rgba(143,82,21,.06);
+}
+.badge--award{border-color:rgba(31,92,74,.5);color:var(--accent);background:rgba(31,92,74,.06);}
+.badge--wip{border-color:var(--line);color:var(--dim-2);background:transparent;}
+.proj__link{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--muted);
+  text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;white-space:nowrap;transition:color .18s,border-color .18s;
+}
+.proj__link:hover,.proj__link:focus-visible{color:var(--accent);border-color:var(--accent);}
+@media(max-width:760px){
+  .proj__top{grid-template-columns:1fr;gap:.55rem;}
+  .proj__idx{padding-top:0;}
+}
+
+/* project media */
+.proj__media{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.5rem 0 0;align-items:start;}
+.proj__fig{margin:0;border:1px solid var(--line);background:var(--card);padding:.5rem;}
+.proj__fig img{width:100%;height:auto;background:var(--paper-2);}
+.proj__fig--tall img{aspect-ratio:4/5;object-fit:cover;object-position:center 42%;}
+.proj__fig figcaption{
+  font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;color:var(--dim-2);
+  margin-top:.55rem;line-height:1.5;
+}
+
+/* pipeline chain */
+.chain{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.45rem;margin:1.35rem 0 0;padding:0;}
+.chain li{
+  position:relative;
+  font-family:var(--mono);font-size:.7rem;color:var(--muted);
+  border:1px solid var(--line-soft);background:var(--card);padding:.34rem .58rem;
+  display:flex;align-items:center;
+}
+.chain li + li::before{
+  content:"→";position:absolute;left:-1.02rem;top:50%;transform:translateY(-50%);
+  color:var(--dim-2);font-size:.72rem;line-height:1;
+}
+.chain li:last-child{color:var(--accent);border-color:rgba(31,92,74,.35);}
+.chain--none li:last-child{color:var(--muted);border-color:var(--line-soft);}
+
+.chain-label{
+  font-family:var(--mono);font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim-2);margin:1.3rem 0 -.5rem;
+}
+.chain-label + .chain{margin-top:.9rem;}
+
+/* build story */
+.story{margin-top:1.2rem;}
+.story summary{
+  list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.55rem;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);
+  transition:color .18s;
+}
+.story summary::-webkit-details-marker{display:none;}
+.story summary:hover,.story summary:focus-visible{color:var(--accent);}
+.story summary .chev{display:inline-block;transition:transform .22s;color:var(--signal);}
+.story[open] summary .chev{transform:rotate(90deg);}
+.story__body{
+  margin-top:1.2rem;padding:1.35rem clamp(1rem,3vw,1.6rem);
+  border:1px solid var(--line-soft);background:var(--card);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem;
+}
+.story__col h5{
+  font-family:var(--mono);font-size:.66rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 .6rem;
+}
+.story__col p{margin:0;font-size:.98rem;color:#333A3D;line-height:1.6;}
+.story__col ul{margin:0;padding-left:1.05rem;font-size:.98rem;color:#333A3D;}
+.story__col li{margin-bottom:.4rem;}
+.story__col code{font-family:var(--mono);font-size:.85em;color:var(--accent-dark);background:rgba(31,92,74,.07);padding:.1em .35em;border:1px solid rgba(31,92,74,.16);}
+.story__col em{font-style:italic;color:var(--ink);}
+.tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem;}
+.tag{font-family:var(--mono);font-size:.66rem;color:var(--muted);border:1px solid var(--line-soft);padding:.25rem .5rem;background:var(--paper-2);}
+.credit{margin-top:.9rem;font-size:.88rem;color:var(--dim-2);font-family:var(--mono);letter-spacing:.02em;}
+
+/* also built */
+.also{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;margin-top:clamp(2.2rem,5vw,3.2rem);}
+.also__item{border:1px solid var(--line-soft);background:var(--card);padding:1.4rem;}
+.also__item h4{font-family:var(--display);font-size:1.18rem;font-weight:400;letter-spacing:-.015em;margin-bottom:.3rem;}
+.also__meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);display:block;margin-bottom:.7rem;}
+.also__item p{margin:0;font-size:1.06rem;color:#2B3134;line-height:1.6;}
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.exp{display:grid;gap:0;border-top:1px solid var(--line);}
+.exp__item{
+  display:grid;grid-template-columns:10ch 1fr;gap:clamp(1rem,3vw,2.4rem);
+  padding:clamp(1.3rem,3vw,1.9rem) 0;border-bottom:1px solid var(--line-soft);
+}
+.exp__when{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);padding-top:.45rem;}
+.exp__role{font-family:var(--display);font-size:1.28rem;font-weight:400;letter-spacing:-.015em;margin:0 0 .2rem;}
+.exp__org{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;color:var(--accent);margin:0 0 .7rem;}
+.exp__media{display:grid;grid-template-columns:1.6fr 1fr;gap:.9rem;margin-top:1.1rem;max-width:560px;align-items:start;}
+.exp__media figure{margin:0;border:1px solid var(--line);background:var(--card);padding:.4rem;}
+.exp__media img{width:100%;height:auto;display:block;aspect-ratio:4/3;object-fit:cover;background:var(--paper-2);}
+.exp__media figcaption{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;color:var(--dim-2);margin-top:.45rem;line-height:1.4;}
+@media(max-width:640px){.exp__media{grid-template-columns:1fr;max-width:340px;}}
+.exp__item ul{margin:0;padding-left:1.05rem;color:#2B3134;font-size:1.08rem;line-height:1.6;list-style:square;}
+.exp__item li{margin-bottom:.35rem;}
+@media(max-width:640px){.exp__item{grid-template-columns:1fr;gap:.5rem;}.exp__when{padding-top:0;}}
+
+/* ============================================================
+   AWARDS TABLE
+   ============================================================ */
+table.rec .rec__link{color:inherit;text-decoration:none;border-bottom:1px solid var(--line);}
+table.rec .rec__link:hover,table.rec .rec__link:focus-visible{color:var(--accent);border-bottom-color:var(--accent);}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--card);}
+table.rec{width:100%;border-collapse:collapse;font-size:.95rem;min-width:640px;}
+table.rec th{
+  font-family:var(--mono);font-size:.64rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim-2);text-align:left;padding:.9rem 1.1rem;border-bottom:1px solid var(--line);background:var(--paper-2);
+}
+table.rec td{padding:1rem 1.1rem;border-bottom:1px solid var(--line-soft);vertical-align:top;color:#272D31;font-size:1.04rem;}
+table.rec tr:last-child td{border-bottom:0;}
+table.rec td.ev{font-family:var(--display);font-weight:400;font-size:1.1rem;letter-spacing:-.01em;white-space:nowrap;}
+table.rec td.meta{font-family:var(--mono);font-size:.74rem;color:var(--dim-2);white-space:nowrap;}
+table.rec td.res{font-family:var(--mono);font-size:.78rem;color:var(--accent);}
+table.rec td.res .none{color:var(--dim-2);}
+
+/* ============================================================
+   STACK
+   ============================================================ */
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(1.4rem,3vw,2.4rem);}
+.stack__col h4{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--line);}
+.stack__col ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem;}
+.stack__col li{font-family:var(--mono);font-size:.76rem;color:var(--muted);border:1px solid var(--line-soft);padding:.32rem .6rem;background:var(--card);}
+
+/* ============================================================
+   TRACK (education)
+   ============================================================ */
+.track{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+.track__item{border-left:2px solid var(--accent);padding:.2rem 0 .2rem 1.3rem;}
+.track__when{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);}
+.track__what{font-family:var(--display);font-size:1.26rem;font-weight:400;margin:.45rem 0 .3rem;letter-spacing:-.015em;}
+.track__where{color:var(--muted);font-size:.98rem;margin:0;}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{border-top:1px solid var(--line);padding:clamp(3.2rem,7.5vw,5.2rem) 0 2.6rem;background:var(--paper-2);}
+.contact h2{max-width:18ch;}
+.contact__links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2rem;}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;padding-top:2.6rem;margin-top:2.6rem;border-top:1px solid var(--line);font-family:var(--mono);font-size:.7rem;color:var(--dim-2);letter-spacing:.06em;}
+.foot a{text-decoration:none;color:var(--dim-2);}
+.foot a:hover{color:var(--accent);}
+
+.gal{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(.8rem,2vw,1.3rem);}
+.gal__item{grid-column:span 2;margin:0;background:var(--card);border:1px solid var(--line);padding:.5rem;}
+.gal__item--wide{grid-column:span 3;}
+.gal__item img{width:100%;height:auto;display:block;aspect-ratio:4/3;object-fit:cover;background:var(--paper-2);}
+.gal__item figcaption{font-family:var(--body);font-size:.86rem;line-height:1.5;color:#333A3D;margin-top:.6rem;padding-top:.55rem;border-top:1px solid var(--line-soft);}
+.gal__ev{display:block;font-family:var(--mono);font-size:.6rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:.3rem;}
+@media(max-width:820px){.gal{grid-template-columns:repeat(2,1fr);}.gal__item,.gal__item--wide{grid-column:span 1;}}
+@media(max-width:520px){.gal{grid-template-columns:1fr;}}
+/* ============================================================
+   MOTION
+   ============================================================ */
+html.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.6,.2,1),transform .6s cubic-bezier(.2,.6,.2,1);}
+html.js .reveal.in{opacity:1;transform:none;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+  html.js .reveal{opacity:1;transform:none;}
+  .run__step{opacity:1;transform:none;}
+}
+@media print{
+  .nav,.run,body::before{display:none!important;}
+  body{background:#fff;}
+  .story__body{display:block;}
+}
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);padding:.85rem 1.2rem;text-decoration:none;
+}
+.skip:focus{left:.75rem;top:.75rem;}
+</style>
+<script>document.documentElement.className+=" js";</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Kaushik Chekka",
+  "url":"https://chezzz439-arch.github.io",
+  "image":"https://chezzz439-arch.github.io/images/kaushik.jpg",
+  "jobTitle":"Cybersecurity student and systems builder",
+  "description":"Builds autonomous agents across quant finance, security, and accessibility. Founder of the clothing brand Arcus.",
+  "alumniOf":{"@type":"CollegeOrUniversity","name":"Purdue University"},
+  "address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US","addressLocality":"San Francisco Bay Area"},
+  "sameAs":[
+    "https://github.com/chezzz439-arch",
+    "https://www.linkedin.com/in/kaushik-chekka-180127238",
+    "https://devpost.com/chezzz439",
+    "https://www.instagram.com/kaushik.chekka/",
+    "https://www.arcuswear.store"
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#work">Skip to the work</a>
+
+<nav class="nav">
+  <div class="wrap nav__in">
+    <a class="nav__mark" href="#top"><span class="nav__dot" aria-hidden="true"></span>KAUSHIK CHEKKA</a>
+    <div class="nav__links">
+      <a href="#about" data-opt>About</a>
+      <a href="#work">Work</a>
+      <a href="#experience" data-opt>Experience</a>
+      <a href="#record">Record</a>
+      <a href="#room" data-opt>Room</a>
+      <a href="#stack" data-opt>Stack</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero__grid">
+        <div>
+          <p class="eyebrow eyebrow--name">Kaushik Chekka</p>
+          <h1>I like building things that <em>ship</em> and keep running when nobody is watching.</h1>
+          <p class="lede hero__sub">B.S. Cybersecurity student at Purdue University, based in the San Francisco Bay Area. I build autonomous agents across quant finance, security, and accessibility. I also run a clothing brand.</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#work">See the work</a>
+            <a class="btn" href="kaushik-chekka-resume.pdf">Download resume</a>
+            <a class="btn" href="https://github.com/chezzz439-arch" rel="noopener">GitHub</a>
+            <a class="btn" href="https://devpost.com/chezzz439" rel="noopener">Devpost</a>
+            <a class="btn" href="https://www.linkedin.com/in/kaushik-chekka-180127238" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+        <figure class="hero__photo">
+          <img src="images/kaushik.jpg" width="1400" height="933" alt="Portrait of Kaushik Chekka in a suit, outdoors" />
+          <figcaption>
+            <span class="hero__now">Right now</span>
+            Just placed 2nd for Social Impact at JacHacks SF with <strong>Brailed</strong>, a phone-mounted six-key Braille keyboard running on an ESP32 over BLE, with a Jac and byLLM agent behind command mode.
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- signature element: the run panel -->
+      <section class="run" aria-label="Example agent run">
+        <div class="run__bar">
+          <span class="run__id"><span class="run__live" aria-hidden="true"></span><span id="runName">conjure</span></span>
+          <span id="runKind">voice → printed part</span>
+        </div>
+        <div class="run__body">
+          <ol class="run__steps" id="runSteps"></ol>
+          <div class="run__foot">
+            <span>human steps after the prompt</span>
+            <b>0</b>
+            <span class="run__note">That number is the point of everything below.</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <!-- ================= LEDGER ================= -->
+  <section class="ledger" aria-label="By the numbers">
+    <div class="wrap">
+      <div class="ledger__grid">
+        <div class="ledger__cell">
+          <div class="ledger__n">8<span>×</span></div>
+          <span class="ledger__l">Hackathon awards<br>across 6 events</span>
+        </div>
+        <div class="ledger__cell">
+          <div class="ledger__n">1,998</div>
+          <span class="ledger__l">Trades in the<br>permutation test</span>
+        </div>
+        <div class="ledger__cell">
+          <div class="ledger__n">847<span>K</span></div>
+          <span class="ledger__l">Behavioral events<br>processed by VIGIL</span>
+        </div>
+        <div class="ledger__cell">
+          <div class="ledger__n">$13<span>K+</span></div>
+          <span class="ledger__l">Revenue through<br>a store I built</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="sec sec--tight" id="about">
+    <div class="wrap about__grid reveal">
+      <div>
+        <p class="eyebrow">The through-line</p>
+        <h2>Most demos need a person standing next to them.</h2>
+        <p style="margin-top:1.4rem;">I keep building the version that doesn't. A pull request gets flagged, rewritten in a sandbox, retested, and merged with no reviewer in the loop. A spoken sentence becomes G-code on a printer bed. A signal fires and a position opens, sized by an expectancy figure I can defend with a permutation test.</p>
+        <p>I study cybersecurity at Purdue, which is where the paranoia comes from. An agent with real permissions needs allow-lists, sandboxes, and a way to prove it was right, so I care as much about the evidence a system produces as the action it takes.</p>
+        <p>The habit predates the code. I started slacklining at eight, spent a summer falling off a line in a public park, and fixed it by drilling the basics on a schedule until the hard version stopped being hard. Wrestling rewarded that. So did the Eagle project. I trust a process I can repeat over a result I got once.</p>
+      </div>
+      <aside class="card-quiet">
+        <h4>Working profile</h4>
+        <dl class="kv"><dt>Based</dt><dd>SF Bay Area</dd></dl>
+        <dl class="kv"><dt>Building with</dt><dd>Python · TypeScript</dd></dl>
+        <dl class="kv"><dt>Model layer</dt><dd>Claude (Anthropic SDK)</dd></dl>
+        <dl class="kv"><dt>Data layer</dt><dd>ClickHouse · Postgres</dd></dl>
+        <dl class="kv"><dt>Domains</dt><dd>Cybersecurity · AI agents · Quant finance · Accessibility · Hardware</dd></dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <p class="eyebrow">Selected work</p>
+        <h2>Ten systems, judged on what they do unattended.</h2>
+        <p>Every card shows the pipeline as it actually runs.</p>
+      </div>
+
+      <nav class="jump reveal" aria-label="Jump to a project"><a href="#p-brailed">Brailed</a><a href="#p-trading-agent">Trading Agent</a><a href="#p-conjure">Conjure</a><a href="#p-assistview">AssistView</a><a href="#p-windtunnel">windtunnel</a><a href="#p-er-oracle">ER Oracle</a><a href="#p-foundrycoach">FoundryCoach</a><a href="#p-sentinel">Sentinel</a><a href="#p-vigil">VIGIL</a><a href="#p-dealghost">DealGhost</a></nav>
+
+      <div class="proj">
+
+        <!-- Brailed -->
+        <article class="proj__item reveal" id="p-brailed">
+          <div class="proj__top">
+            <span class="proj__idx">01</span>
+            <div>
+              <div class="proj__title">
+                <h3>Brailed</h3>
+                <span class="proj__lang">ESP32 · BLE · Jac</span>
+                <span class="badge badge--award">JacHacks SF · 2nd Place, Social Impact</span>
+              </div>
+              <p class="proj__sum">A phone-mounted braille keyboard that lets blind, deaf, and deafblind users type, read captions, and drive a phone <em>privately</em>. Refreshable braille displays start above $1,000. This one is about $15 in parts.</p>
+              <ol class="chain">
+                <li>6-key chord</li><li>decode on release</li><li>BLE GATT</li><li>phone app</li><li>Jac + byLLM</li><li>phone action</li>
+              </ol>
+              <div class="proj__media">
+                <figure class="proj__fig proj__fig--tall">
+                  <img src="images/brailed-product.jpg" width="643" height="1400" loading="lazy" alt="The Brailed device mounted on the back of a phone: six capacitive touch pads, an ESP32 board, a small OLED display, and a 3D-printed frame." />
+                  <figcaption>The device: six capacitive pads, ESP32, OLED, 3D-printed frame. Photo: Dhruv Gupta</figcaption>
+                </figure>
+                <figure class="proj__fig">
+                  <img src="images/brailed-system.svg" width="720" height="420" loading="lazy" alt="System diagram: six-key chord input feeds an ESP32, which sends characters over a BLE GATT service to an Android app; command-mode input branches to a Jac and byLLM agent that performs the phone action." />
+                  <figcaption>Plain typing stays on the BLE link. Only command mode reaches the LLM.</figcaption>
+                </figure>
+                <figure class="proj__fig">
+                  <img src="images/brailed-team.jpg" width="1400" height="1183" loading="lazy" alt="The three-person Brailed team holding the finished device, with the CAD model open on one laptop and the project landing page on the other." />
+                  <figcaption>End of the build. CAD on one screen, the landing page on the other, working hardware in hand.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <a class="proj__link" href="https://devpost.com/software/brailed" rel="noopener">Devpost ↗</a>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>The hardest bug wasn't code</h5>
+                <p>The ESP32 kept resetting in a loop. BLE radio bursts landing on top of an OLED refresh sagged the supply voltage far enough to trip the brownout detector: a hardware failure wearing a software costume. I stripped the firmware back to a bare heartbeat sketch to isolate it, then fixed power delivery and dropped the CPU clock. The tempting fix was to disable the detector, which hides the problem instead of solving it.</p>
+              </div>
+              <div class="story__col">
+                <h5>The decision I'd defend</h5>
+                <p>Send started as an all-six-keys chord. Elegant, and wrong: six pads in one debounce window is six chances at a false negative, and a silently dropped Send is the worst failure for someone who can't glance at the screen. I moved it to a dedicated seventh button, re-deriving what Perkins braillers settled decades ago. A mistyped letter is a typo. A dropped Send is a broken promise.</p>
+              </div>
+              <div class="story__col">
+                <h5>How it works</h5>
+                <ul>
+                  <li>Six sensors read as a 6-bit chord, decoded <em>on release</em>: a state machine accumulates dots while any key is held and looks up the bitmask once all fingers lift, so imperfect timing still registers as one character</li>
+                  <li>A custom BLE GATT service carries characters out and transcript text back, on separate characteristics</li>
+                  <li>Plain typing never leaves the BLE link; only command-mode input goes through the Jac/byLLM pipeline, so the LLM adds no latency to normal use</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">ESP32</span><span class="tag">C++</span><span class="tag">PlatformIO</span><span class="tag">NimBLE</span><span class="tag">SSD1306 OLED</span><span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">AccessibilityService</span><span class="tag">Jac / Jaseci</span><span class="tag">byLLM</span><span class="tag">LiteLLM</span><span class="tag">Claude</span><span class="tag">Vosk</span></div>
+                <p class="credit">Built at JacHacks SF with Dhruv Gupta and Yash Kathrani.</p>
+                <p style="margin-top:.5rem;font-size:.9rem;">
+                  <a href="https://www.youtube.com/watch?v=pwDT-jaVTDM" rel="noopener" style="color:var(--accent);">Demo video ↗</a>
+                  &nbsp;·&nbsp;
+                  <a href="https://github.com/chezzz439-arch/Brailed" rel="noopener" style="color:var(--accent);">GitHub ↗</a>
+                </p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- Trading Agent -->
+        <article class="proj__item reveal" id="p-trading-agent">
+          <div class="proj__top">
+            <span class="proj__idx">02</span>
+            <div>
+              <div class="proj__title">
+                <h3>Trading Agent</h3>
+                <span class="proj__lang">Python</span>
+                <span class="badge">Runs unattended</span>
+              </div>
+              <p class="proj__sum">An autonomous quant fund that scores 196 assets across ten signal engines and trades only setups whose edge survives a permutation test. Not a pretty equity curve: p&nbsp;=&nbsp;0.001 across 1,998 trades, harness included.</p>
+              <ol class="chain">
+                <li>10 signal phases</li><li>research layer ±25</li><li>master score</li><li>70-point gate</li><li>risk gates</li><li>bracket execution</li><li>Telegram</li>
+              </ol>
+              <div class="proj__media">
+                <figure class="proj__fig">
+                  <img src="images/trading-dashboard.jpg" width="1400" height="852" loading="lazy" alt="The trading agent dashboard on a paper account, showing portfolio value, win rate, open positions, and a live activity feed of symbols the risk gates rejected." />
+                  <figcaption>The live paper account, which is a separate thing from the 1,998-trade validation run. Note the activity feed: most lines are the risk gates saying no.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <a class="proj__link" href="https://github.com/chezzz439-arch/trading-agent" rel="noopener">GitHub ↗</a>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>The trade it refused</h5>
+                <p>A name came through at 92 technical, everything the chart layer wants. The research layer pulled SEC EDGAR Form 4 filings, found a $271M insider sell-off underneath, and the agent declined. That refusal is the design: technicals are a hypothesis, and research can veto them by ±25 points before the risk gates ever see it.</p>
+              </div>
+              <div class="story__col">
+                <h5>Proof, not a backtest screenshot</h5>
+                <ul>
+                  <li>Walk-forward out-of-sample folds, permutation tests, Probabilistic and Deflated Sharpe, bootstrap p-values, and Benjamini-Hochberg FDR correction, all shipped in the repo rather than described in a slide</li>
+                  <li>1,998 trades, +0.455R expectancy, +3.28R average win against −1.06R average loss, 79% of symbols net profitable</li>
+                  <li>The README states the unflattering half too: the edge is real but the return profile is defensive, and the bottleneck is capital efficiency rather than signal quality</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>How it runs</h5>
+                <ul>
+                  <li>Ten phases per symbol per scan: ~60 technical indicators, Hurst and ADF statistics, regime classification, cross-timeframe confluence from 15m to 1w, and an XGBoost/RandomForest ensemble treated as a weak prior rather than an oracle</li>
+                  <li>A 70-point gate plus relative-strength veto before any position is sized</li>
+                  <li>Correlation caps, a portfolio-heat ceiling, and a kill switch that flattens the book</li>
+                  <li>Sentiment and multi-timeframe phases score neutral in backtests because they need live feeds, so they aren't point-in-time reproducible and the harness says so</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">Python 3.14</span><span class="tag">Alpaca</span><span class="tag">SEC EDGAR</span><span class="tag">XGBoost</span><span class="tag">scikit-learn</span><span class="tag">statsmodels</span><span class="tag">Streamlit</span><span class="tag">Plotly</span><span class="tag">Telegram</span><span class="tag">pytest</span></div>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- Conjure + Morph-Forge -->
+        <article class="proj__item reveal" id="p-conjure">
+          <div class="proj__top">
+            <span class="proj__idx">03</span>
+            <div>
+              <div class="proj__title">
+                <h3>Conjure &amp; Morph-Forge</h3>
+                <span class="proj__lang">Voice &amp; agent → 3D print</span>
+                <span class="badge">No human after the first press</span>
+              </div>
+              <p class="proj__sum">Speak a description, walk away, pick up a printed part. Nobody is in the loop after the first button press. Conjure is the kiosk; Morph-Forge is the engineering agent behind it.</p>
+              <p class="chain-label">Kiosk: anyone walks up</p>
+              <ol class="chain">
+                <li>speak it</li><li>Meshy AI model</li><li>Three.js preview</li><li>slice</li><li>USB → Neptune 4 Pro</li>
+              </ol>
+              <p class="chain-label">Morph-Forge: the engineering agent</p>
+              <ol class="chain">
+                <li>Kite AI auth</li><li>You.com + Tavily specs</li><li>Llama-70B writes OpenSCAD</li><li>render + slice</li><li>Moonraker dispatch</li><li>structural review</li>
+              </ol>
+              <div class="proj__media">
+                <figure class="proj__fig">
+                  <img src="images/conjure-kiosk.jpg" width="1400" height="1050" loading="lazy" alt="The Conjure kiosk at Wizard Hackathon: an Orange Pi 5 Pro driving a touchscreen next to a Neptune 4 Pro 3D printer." />
+                  <figcaption>The kiosk at Wizard Hackathon: Orange Pi 5 Pro, touchscreen, Neptune 4 Pro. Photo: Dhruv Gupta</figcaption>
+                </figure>
+              </div>
+            </div>
+            <a class="proj__link" href="https://github.com/chezzz439-arch/Conjure" rel="noopener">GitHub ↗</a>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>Two paths, one printer</h5>
+                <p>The kiosk runs on an Orange Pi 5 Pro: hold the mic, describe an object, and Meshy returns a model that spins in Three.js while ElevenLabs narrates. Morph-Forge takes the harder route. It looks up real pipe dimensions and PLA tensile figures with citations first, so Llama-3.3-70B writes parametric OpenSCAD against measured numbers rather than hallucinated ones, then reviews its own output before printing.</p>
+              </div>
+              <div class="story__col">
+                <h5>The failure mode I documented instead of hiding</h5>
+                <p>Both modes write to the same scratch gcode path, so a second kiosk tab wipes a finished build. Instead of papering over it, the export endpoint re-checks the file on disk rather than trusting an in-memory flag. The failure surfaces as a clean 409, never as a USB stick holding the wrong object. The real fix is per-build paths, and the README says it's deferred.</p>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">Orange Pi 5 Pro</span><span class="tag">Meshy AI</span><span class="tag">Three.js</span><span class="tag">OpenSCAD</span><span class="tag">CuraEngine</span><span class="tag">OrcaSlicer</span><span class="tag">Moonraker</span><span class="tag">Nebius Llama-3.3-70B</span><span class="tag">You.com</span><span class="tag">Tavily</span><span class="tag">ElevenLabs</span><span class="tag">InsForge</span><span class="tag">Kite AI</span><span class="tag">Topify</span></div>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- AssistView -->
+        <article class="proj__item reveal" id="p-assistview">
+          <div class="proj__top">
+            <span class="proj__idx">04</span>
+            <div>
+              <div class="proj__title">
+                <h3>AssistView</h3>
+                <span class="proj__lang">React Native · On-device CV</span>
+                <span class="badge badge--award">Live</span>
+              </div>
+              <p class="proj__sum">One app, any camera, every disability. Four modes on one pipeline: hazard callouts for blind users, face recall before a dementia patient has to guess, step-by-step task coaching, and read-aloud for anything you point at.</p>
+              <ol class="chain chain--none">
+                <li>camera</li><li>YOLOv8n on-device @ 30fps</li><li>instant hazard alert</li><li>Claude Sonnet every 4s</li><li>spoken description</li>
+              </ol>
+              <div class="proj__media">
+                <figure class="proj__fig">
+                  <img src="images/assistview.jpg" width="1200" height="573" loading="lazy" alt="AssistView in Task Coach mode, offering step-by-step guidance for daily tasks with quick-start options such as making breakfast and taking medication." />
+                  <figcaption>Task Coach, running as a guest. The four modes sit in one nav: Navigate, Memory, Coach, Reader.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <a class="proj__link" href="https://assistview.butterbase.dev" rel="noopener">Live ↗</a>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>Two loops at two speeds</h5>
+                <p>Safety can't wait on a network round trip, but a useful description of a room needs a real model. So YOLOv8n runs on-device at 30fps for "person ahead" and "step down," while Claude Sonnet 4.6 narrates the wider scene every four seconds. The fast loop keeps you from walking into something; the slow loop tells you where you are.</p>
+              </div>
+              <div class="story__col">
+                <h5>Memory mode</h5>
+                <p>Face recognition here isn't surveillance. It is context delivered before a conversation starts, pulled from saved notes and recent history, so a dementia patient isn't left searching for the name of someone they love.</p>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">React Native</span><span class="tag">Expo SDK 56</span><span class="tag">React 18 + Vite</span><span class="tag">YOLOv8n TFLite</span><span class="tag">Claude Sonnet 4.6</span><span class="tag">Butterbase</span><span class="tag">vision-camera</span></div>
+                <p class="credit">Built at the Beta Fund × Antler Hackathon. Architected for Meta Ray-Ban glasses as a hands-free camera; SDK bridge is in the repo.</p>
+                <p style="margin-top:.5rem;font-size:.9rem;">
+                  <a href="https://github.com/chezzz439-arch/assistview" rel="noopener" style="color:var(--accent);">GitHub ↗</a>
+                </p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- windtunnel -->
+        <article class="proj__item reveal" id="p-windtunnel">
+          <div class="proj__top">
+            <span class="proj__idx">05</span>
+            <div>
+              <div class="proj__title">
+                <h3>windtunnel</h3>
+                <span class="proj__lang">TypeScript · Dev tooling</span>
+                <span class="badge badge--wip">Early development</span>
+              </div>
+              <p class="proj__sum">Diffs show what the text says. windtunnel runs the baseline and the candidate against the same inputs and reports what actually changed, for when an agent just rewrote 1,400 lines you have to merge.</p>
+              <ol class="chain">
+                <li>two git worktrees</li><li>build input envelope</li><li>run baseline twice</li><li>subtract noise floor</li><li>canonical diff</li><li>report</li>
+              </ol>
+            </div>
+            <a class="proj__link" href="https://github.com/chezzz439-arch/windtunnel" rel="noopener">GitHub ↗</a>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>Run it three times, not twice</h5>
+                <p>The baseline runs twice under a determinism harness: seeded RNG, frozen clock, replayed network. Anything that differs between two runs of identical code is noise. That measured noise floor is subtracted before the candidate is compared at all, so what survives is signal. If the floor is too large to trust, windtunnel refuses to emit a report.</p>
+              </div>
+              <div class="story__col">
+                <h5>Honesty is the product</h5>
+                <p>The README lists what it can't do before what it can. It doesn't prove equivalence. General behavioral equivalence is undecidable, so "unchanged" always means "unchanged on these inputs," never "unchanged, period," and every report states its envelope. It doesn't review style, architecture, or security. Plenty of tools read the text; this one only runs it.</p>
+              </div>
+              <div class="story__col">
+                <h5>Where it fits</h5>
+                <ul>
+                  <li>A Claude Code Stop hook lets the agent read its own behavioral delta and fix unintended changes before a human ever sees them</li>
+                  <li>A GitHub Action posts one PR comment per push with the measured delta</li>
+                  <li>Reports separate intended deltas from likely-unintended ones, with baseline and candidate output attached</li>
+                </ul>
+                <div class="tags" style="margin-top:1rem;"><span class="tag">TypeScript</span><span class="tag">Node 20</span><span class="tag">git worktree</span><span class="tag">Vitest</span><span class="tag">execa</span><span class="tag">fast-check</span><span class="tag">GitHub Actions</span></div>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- ER Wait Oracle -->
+        <article class="proj__item reveal" id="p-er-oracle">
+          <div class="proj__top">
+            <span class="proj__idx">06</span>
+            <div>
+              <div class="proj__title">
+                <h3>ER Wait Oracle</h3>
+                <span class="proj__lang">TypeScript / Node</span>
+                <span class="badge">Runs hourly, unattended</span>
+                <span class="badge badge--award">Live</span>
+              </div>
+              <p class="proj__sum">There is no public real-time ER wait feed in the US. The Oracle predicts which San Francisco ER will be least busy over the next four hours using only signals that <em>are</em> public, and says plainly that is what it is doing.</p>
+              <ol class="chain">
+                <li>CMS baselines</li><li>Open-Meteo live weather</li><li>ClickHouse</li><li>Claude forced tool-use</li><li>0–100 busy score</li><li>ranked outlook</li>
+              </ol>
+              <div class="proj__media">
+                <figure class="proj__fig">
+                  <img src="images/er-oracle.jpg" width="1400" height="913" loading="lazy" alt="ER Wait Oracle showing San Francisco emergency rooms on a map, with Chinese Hospital ranked best right now at a busy score of 21 out of 100, 1.9 miles away." />
+                  <figcaption>Live in San Francisco. The pick carries its own reasoning: distance, predicted load, and typical visit length.</figcaption>
+                </figure>
+              </div>
+            </div>
+            <a class="proj__link" href="https://er-wait-oracle.vercel.app" rel="noopener">Live ↗</a>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>The problem</h5>
+                <p>The obvious data source doesn't exist. Instead of faking it, the Oracle fuses three public signals: CMS <em>Timely &amp; Effective Care</em> gives each ER a stable character (volume tier, median throughput, percentage of patients who leave without being seen), while live Open-Meteo weather and time-of-week supply everything that actually varies hour to hour.</p>
+              </div>
+              <div class="story__col">
+                <h5>How it runs</h5>
+                <ul>
+                  <li>An hourly cron snapshots all three signals into append-only ClickHouse MergeTree tables, so the real history is the accumulating forecast log</li>
+                  <li>Claude anchors each ER to its CMS baseline, then adjusts for current weather and time to produce a calibrated score with reasoning and key factors</li>
+                  <li>A forced <code>submit_predictions</code> tool call keeps output structured, with no brittle JSON parsing</li>
+                  <li>Prompt caching on the identical hourly system prompt; the run log prints cache-read and input token counts so you can watch it working</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">TypeScript</span><span class="tag">Node 20 ESM</span><span class="tag">ClickHouse</span><span class="tag">Anthropic SDK</span><span class="tag">node-cron</span><span class="tag">Docker</span><span class="tag">CMS data</span><span class="tag">Open-Meteo</span></div>
+                <p style="margin-top:.9rem;font-size:.9rem;">
+                  <a href="https://github.com/chezzz439-arch/er-wait-oracle" rel="noopener" style="color:var(--accent);">GitHub ↗</a>
+                </p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- FoundryCoach -->
+        <article class="proj__item reveal" id="p-foundrycoach">
+          <div class="proj__top">
+            <span class="proj__idx">07</span>
+            <div>
+              <div class="proj__title">
+                <h3>FoundryCoach</h3>
+                <span class="proj__lang">Next.js · Fastify · Deepgram</span>
+                <span class="badge badge--wip">Private repo · in development</span>
+              </div>
+              <p class="proj__sum">A meeting coach for founders: live nudges during investor pitches and sales calls, then the analysis and the next prep brief. The hard part is not the transcript. It is being useful inside two seconds.</p>
+              <ol class="chain">
+                <li>Chrome MV3 capture</li><li>Deepgram live transcript</li><li>WebSocket to Fastify</li><li>in-meeting nudge</li><li>BullMQ post-job</li><li>next-meeting brief</li>
+              </ol>
+            </div>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>Two clocks, again</h5>
+                <p>The same split as AssistView: a live path that answers inside the moment, a deep path that can afford to think. Streaming transcription goes over a WebSocket into Fastify for the nudge; the expensive analysis queues into BullMQ and runs after everyone hangs up. One path for both makes the coaching too slow and the analysis too shallow.</p>
+              </div>
+              <div class="story__col">
+                <h5>The distribution problem</h5>
+                <p>Chrome derives a sideloaded extension's ID from a public key in its manifest. Left alone, that ID changes on every rebuild and every machine, breaking the web app's handshake. Generating the RSA keypair once and pinning the public key keeps it stable everywhere: an unglamorous detail that decides whether the product installs at all.</p>
+              </div>
+              <div class="story__col">
+                <h5>How it's laid out</h5>
+                <ul>
+                  <li>pnpm monorepo: <code>apps/web</code> Next.js 15, <code>apps/api</code> Fastify, <code>apps/extension</code> Vite + CRXJS</li>
+                  <li><code>packages/shared</code> holds Zod schemas and prompts so the extension and server can't drift on message shape</li>
+                  <li>Postgres with pgvector via Supabase, for retrieval over past meetings</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">Next.js 15</span><span class="tag">Fastify</span><span class="tag">Deepgram</span><span class="tag">Anthropic SDK</span><span class="tag">BullMQ</span><span class="tag">Redis</span><span class="tag">Supabase</span><span class="tag">pgvector</span><span class="tag">Vite + CRXJS</span><span class="tag">Zod</span><span class="tag">Tailwind</span><span class="tag">shadcn/ui</span></div>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- Sentinel -->
+        <article class="proj__item reveal" id="p-sentinel">
+          <div class="proj__top">
+            <span class="proj__idx">08</span>
+            <div>
+              <div class="proj__title">
+                <h3>Sentinel</h3>
+                <span class="proj__lang">Autonomous compliance</span>
+                <span class="badge">No human in the loop</span>
+                <span class="badge badge--wip">Private repo</span>
+              </div>
+              <p class="proj__sum">Catches a security-policy violation in a pull request, rewrites the code in a sandbox, reruns the tests until they pass, and merges. The reviewer finds out from Slack.</p>
+              <ol class="chain">
+                <li>scan PR</li><li>flag violation</li><li>rewrite in Daytona</li><li>rerun tests</li><li>security gate</li><li>auto-merge</li>
+              </ol>
+            </div>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>What it does</h5>
+                <p>Sentinel treats a policy violation as a task rather than a ticket. It detects the violation, fixes it inside an isolated Daytona sandbox, and only merges once the test suite comes back green.</p>
+              </div>
+              <div class="story__col">
+                <h5>How it runs</h5>
+                <ul>
+                  <li>Sandboxed rewrite loop: retest, don't trust the first patch</li>
+                  <li>An Opsera security gate stands between the fix and the merge</li>
+                  <li>Slack alerts keep the team informed without blocking the run</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">Claude</span><span class="tag">Daytona</span><span class="tag">Opsera</span><span class="tag">Slack</span><span class="tag">CI</span></div>
+                <p class="credit">Built at the Applied Intelligence Hackathon, 3rd of 600+.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- VIGIL -->
+        <article class="proj__item reveal" id="p-vigil">
+          <div class="proj__top">
+            <span class="proj__idx">09</span>
+            <div>
+              <div class="proj__title">
+                <h3>VIGIL</h3>
+                <span class="proj__lang">Eldercare · Vision</span>
+                <span class="badge badge--award">Best Use of Postgres</span>
+                <span class="badge badge--wip">Private repo</span>
+              </div>
+              <p class="proj__sum">An eldercare guardian that reads 847K behavioral events at sub-100ms latency from a single camera, catching falls and anomalies before they become emergencies, then calling the family itself.</p>
+              <ol class="chain">
+                <li>one camera</li><li>YOLO + MediaPipe</li><li>Postgres NOTIFY</li><li>ClickHouse baseline</li><li>anomaly detected</li><li>Claude phone call</li>
+              </ol>
+            </div>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>Two databases, two jobs</h5>
+                <p>Postgres owns the people and the rules: who the resident is, who to call, what counts as an alert. ClickHouse owns the behavior: 847K events over 30 days, with a rolling window computing each person's own baseline per activity per hour. A fall doesn't wait for analytics. An INSERT trigger fires <code>pg_notify</code> and the alert lands in under 200ms.</p>
+              </div>
+              <div class="story__col">
+                <h5>Baseline, not raw frames</h5>
+                <ul>
+                  <li>Anomaly is measured in standard deviations from that person's own history, not against a generic threshold</li>
+                  <li>Events batch 64 at a time and CLIP embeddings compute every 15th frame, because writing every frame would stall the camera loop</li>
+                  <li>Vector search and time-series analytics live in the same system, so there's no separate vector DB to keep in sync</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>Built with</h5>
+                <div class="tags"><span class="tag">Python</span><span class="tag">YOLOv8n</span><span class="tag">MediaPipe Pose</span><span class="tag">CLIP ViT-B/32</span><span class="tag">ClickHouse</span><span class="tag">Postgres</span><span class="tag">psycopg v3</span><span class="tag">Claude</span><span class="tag">Hex</span></div>
+                <p class="credit">Built in a 7-hour window at the ClickHouse × Hex hackathon, with Rishab and Aryan.</p>
+              </div>
+            </div>
+          </details>
+        </article>
+
+        <!-- DealGhost -->
+        <article class="proj__item reveal" id="p-dealghost">
+          <div class="proj__top">
+            <span class="proj__idx">10</span>
+            <div>
+              <div class="proj__title">
+                <h3>DealGhost</h3>
+                <span class="proj__lang">Revenue memory</span>
+                <span class="badge badge--award">Best Use of Butterbase</span>
+                <span class="badge badge--wip">Private repo</span>
+              </div>
+              <p class="proj__sum">Revenue memory for sales teams, built from a team's own history. It learns why deals were lost and speaks up the moment a live one starts matching a known loss signature.</p>
+              <ol class="chain">
+                <li>read past calls</li><li>learn loss patterns</li><li>watch live deal</li><li>match signature</li><li>intervene automatically</li>
+              </ol>
+            </div>
+          </div>
+          <details class="story">
+            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
+            <div class="story__body">
+              <div class="story__col">
+                <h5>What it does</h5>
+                <p>Sales tools tell you a deal died after it dies. DealGhost learns each team's own loss signatures from their historical calls, then intervenes while the deal is still open.</p>
+              </div>
+              <div class="story__col">
+                <h5>How it runs</h5>
+                <ul>
+                  <li>Trained on the team's own data, not a generic playbook</li>
+                  <li>Continuously compares live deals against known loss patterns</li>
+                  <li>Intervention is automatic, not a weekly report</li>
+                </ul>
+              </div>
+              <div class="story__col">
+                <h5>Recognition</h5>
+                <p>Best Use of Butterbase, Agent Native Company Hackathon.</p>
+                <div class="tags" style="margin-top:1rem;"><span class="tag">Claude</span><span class="tag">Butterbase</span></div>
+              </div>
+            </div>
+          </details>
+        </article>
+
+      </div>
+
+      <!-- also built -->
+      <div class="also reveal">
+        <div class="also__item">
+          <h4>Meeting Ghost</h4>
+          <span class="also__meta">Node · AppleScript · macOS</span>
+          <p>Watches Apple Calendar and, minutes before each meeting, fires a native notification with a researched three-bullet prep brief. Claude does the research with web search; a dedupe file means you get briefed once per meeting, not once per poll.</p>
+        </div>
+        <div class="also__item">
+          <h4>Arcus storefront</h4>
+          <span class="also__meta">React · Supabase · <a href="https://www.arcuswear.store" rel="noopener" style="color:var(--accent);">arcuswear.store ↗</a></span>
+          <p>The store behind my clothing brand, built from scratch instead of reaching for Shopify: real accounts, passkey sign-in, a cart that survives sign-out. It has processed $13K+ in orders. E-commerce is a different discipline: every bug here costs actual money.</p>
+        </div>
+        <div class="also__item">
+          <h4>Semester Board</h4>
+          <span class="also__meta">FastAPI · SQLite · ICS</span>
+          <p>One board that answers where I need to be and what's due, reconciling Brightspace and Outlook calendar feeds with manual capture. Feed URLs are secrets, so they never leave <code style="font-family:var(--mono);font-size:.85em;">.env</code>. Still early: the sync loop and schema are done, real feeds are still being wired.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section class="sec sec--tight" id="experience">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <p class="eyebrow">Experience, education &amp; leadership</p>
+        <h2>Responsibility for the whole system.</h2>
+      </div>
+      <div class="exp reveal">
+        <div class="exp__item">
+          <span class="exp__when">Since 2026</span>
+          <div>
+            <h3 class="exp__role">B.S. Cybersecurity</h3>
+            <p class="exp__org">Purdue University</p>
+            <ul>
+              <li>In progress. Threat modelling, access control, and the habit of asking what a system does when it is attacked rather than when it is demoed</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp__item">
+          <span class="exp__when">Since 2025</span>
+          <div>
+            <h3 class="exp__role">Founder</h3>
+            <p class="exp__org">Arcus · <a href="https://www.arcuswear.store" rel="noopener" style="color:var(--accent);">arcuswear.store ↗</a></p>
+            <ul>
+              <li>Clothing brand with a live store and <strong>$13K+ in revenue</strong>. ARCUS Tee, All Paths Tee, and the two-piece Arcus Set</li>
+              <li>Built the storefront from scratch: React + Supabase, real accounts, passkey sign-in, persistent cart. Not a Shopify template</li>
+              <li>Runs the whole loop: product, drops, pricing, and the store that sells them</li>
+            </ul>
+            <div class="exp__media">
+              <figure>
+                <img src="images/arcus-store.jpg" width="1400" height="813" loading="lazy" alt="The Arcus storefront product page, showing the two-piece Arcus Set at $65 flanked by the ARCUS and All Paths tees." />
+                <figcaption>The store, built from scratch on React and Supabase.</figcaption>
+              </figure>
+              <figure>
+                <img src="images/arcus-tees.jpg" width="1200" height="1800" loading="lazy" alt="The ARCUS Tee and the All Paths Tee worn side by side." />
+                <figcaption>The ARCUS Tee and the All Paths Tee.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class="exp__item">
+          <span class="exp__when" data-fill>&nbsp;</span>
+          <div>
+            <h3 class="exp__role">Varsity Wrestler</h3>
+            <p class="exp__org">High school varsity program</p>
+            <ul>
+              <li>Competed at tournament level through the season, holding a weight class while training through it</li>
+              <li>The sport with the least room to blame anything else: scored on what you did, alone, in six minutes. Roughly how I feel about shipping</li>
+              <li>Ran conditioning alongside tutoring hours and the Eagle project. None of that balanced by accident</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp__item">
+          <span class="exp__when" data-fill>&nbsp;</span>
+          <div>
+            <h3 class="exp__role">JavaScript Tutor</h3>
+            <p class="exp__org">One-to-one coding instruction</p>
+            <ul>
+              <li>Taught JavaScript one-to-one, mostly in debugging sessions rather than lectures</li>
+              <li>Explaining a bug to someone who can't yet read a stack trace is the fastest test of whether you understand it</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp__item">
+          <span class="exp__when" data-fill>&nbsp;</span>
+          <div>
+            <h3 class="exp__role">National Board Member</h3>
+            <p class="exp__org">Serving Handz · <a href="https://servinghandz.com/home/" rel="noopener" style="color:var(--accent);">servinghandz.com ↗</a></p>
+            <ul>
+              <li>Student-led nonprofit serving people experiencing homelessness. Grew from a club of three into a chapter network run out of member schools</li>
+              <li>Sets direction for the chapters and their programming: brown-bag meal drives, clothing collection, outreach events</li>
+              <li>Hands-on rather than administrative. A drive only counts when the bags reach a shelter</li>
+            </ul>
+          </div>
+        </div>
+        <div class="exp__item">
+          <span class="exp__when" data-fill>&nbsp;</span>
+          <div>
+            <h3 class="exp__role">Eagle Scout</h3>
+            <p class="exp__org">Scouting America · highest rank in the program</p>
+            <ul>
+              <li>The program's highest rank: planning, funding, and leading a service project from proposal through sign-off</li>
+              <li>Ran the build at a community garden, scheduling volunteers around a fixed deadline</li>
+              <li>Finished it in the same stretch I was tutoring and wrestling varsity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RECORD ================= -->
+  <section class="sec" id="record">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <p class="eyebrow">Hackathon record</p>
+        <h2>Eight awards, six events, one habit.</h2>
+        <p>Ship something that runs by itself before the clock stops.</p>
+      </div>
+      <div class="tablewrap reveal">
+        <table class="rec">
+          <caption class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Hackathon results by event</caption>
+          <thead>
+            <tr><th scope="col">Event</th><th scope="col">Context</th><th scope="col">Result</th><th scope="col">Project</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="ev">Wizard Hackathon</td>
+              <td class="meta">San Francisco · Jun 2026</td>
+              <td class="res">2nd Overall · Best Use of You.com · Best Use of FinChip</td>
+              <td><a class="rec__link" href="#p-conjure">Conjure &amp; Morph-Forge</a></td>
+            </tr>
+            <tr>
+              <td class="ev">Applied Intelligence</td>
+              <td class="meta">600+ participants</td>
+              <td class="res">3rd Overall · Best Use of Kalibr</td>
+              <td><a class="rec__link" href="#p-sentinel">Sentinel</a></td>
+            </tr>
+            <tr>
+              <td class="ev">JacHacks SF</td>
+              <td class="meta">San Francisco</td>
+              <td class="res">2nd, Social Impact Track</td>
+              <td><a class="rec__link" href="#p-brailed">Brailed</a></td>
+            </tr>
+            <tr>
+              <td class="ev">ClickHouse × Hex</td>
+              <td class="meta">Data infrastructure</td>
+              <td class="res">Best Use of Postgres</td>
+              <td><a class="rec__link" href="#p-vigil">VIGIL</a></td>
+            </tr>
+            <tr>
+              <td class="ev">Agent Native Company</td>
+              <td class="meta">Agent infrastructure</td>
+              <td class="res">Best Use of Butterbase</td>
+              <td><a class="rec__link" href="#p-dealghost">DealGhost</a></td>
+            </tr>
+            <tr>
+              <td class="ev">Beta Fund × Antler</td>
+              <td class="meta">Venture track</td>
+              <td class="res"><span class="none">Competed</span></td>
+              <td><a class="rec__link" href="#p-assistview">AssistView</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALLERY ================= -->
+  <section class="sec sec--tight" id="room">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <p class="eyebrow">The room</p>
+        <h2>None of it was built alone.</h2>
+        <p>Six events, and a different set of people every time.</p>
+      </div>
+      <div class="gal reveal">
+        <figure class="gal__item gal__item--wide">
+          <img src="images/brailed-pitch.jpg" width="1400" height="779" loading="lazy" alt="Kaushik and two teammates presenting Brailed on stage to a seated room at JacHacks SF, with the device shown on the screen behind them." />
+          <figcaption><span class="gal__ev">JacHacks SF</span>Pitching Brailed. It took 2nd in the Social Impact track.</figcaption>
+        </figure>
+        <figure class="gal__item">
+          <img src="images/vigil-team.jpg" width="854" height="690" loading="lazy" alt="Kaushik with three teammates and a mentor at the ClickHouse and Hex hackathon, standing in a brick-walled venue." />
+          <figcaption><span class="gal__ev">ClickHouse &times; Hex</span>The VIGIL team. Built in a day, 847K events by the end of it.</figcaption>
+        </figure>
+        <figure class="gal__item">
+          <img src="images/ft-stage.jpg" width="1400" height="1049" loading="lazy" alt="Kaushik lined up on stage with the other teams at Frontier Tower in San Francisco while results are read out at the Agent Native Company hackathon." />
+          <figcaption><span class="gal__ev">Agent Native Company</span>Lined up on stage for results. DealGhost took Best Use of Butterbase.</figcaption>
+        </figure>
+        <figure class="gal__item gal__item--wide">
+          <img src="images/ft-team.jpg" width="1400" height="1054" loading="lazy" alt="A group of about ten Agent Native Company hackathon participants gathered for a photo in front of the stage at Frontier Tower, San Francisco." />
+          <figcaption><span class="gal__ev">Agent Native Company</span>Frontier Tower, SF. The room at the end of the weekend.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STACK ================= -->
+  <section class="sec sec--tight" id="stack">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <p class="eyebrow">Toolbox</p>
+        <h2>What I build with.</h2>
+      </div>
+      <div class="stack reveal">
+        <div class="stack__col">
+          <h4>Languages</h4>
+          <ul><li>Python</li><li>TypeScript</li><li>JavaScript</li><li>Node.js</li><li>C++</li><li>Kotlin</li></ul>
+        </div>
+        <div class="stack__col">
+          <h4>AI / ML</h4>
+          <ul><li>Claude (Anthropic SDK)</li><li>Forced tool-use</li><li>Structured outputs</li><li>Prompt caching</li><li>XGBoost</li><li>RandomForest</li><li>YOLOv8</li></ul>
+        </div>
+        <div class="stack__col">
+          <h4>Data &amp; infra</h4>
+          <ul><li>ClickHouse</li><li>PostgreSQL</li><li>Redis</li><li>Docker</li><li>Streamlit</li><li>Vercel</li><li>GitHub Actions</li><li>pytest</li></ul>
+        </div>
+        <div class="stack__col">
+          <h4>Apps &amp; hardware</h4>
+          <ul><li>React Native</li><li>Expo</li><li>Next.js</li><li>Three.js</li><li>OpenSCAD</li><li>CuraEngine</li><li>ESP32</li><li>BLE GATT</li></ul>
+        </div>
+        <div class="stack__col">
+          <h4>APIs</h4>
+          <ul><li>Alpaca</li><li>SEC EDGAR</li><li>Butterbase</li><li>InsForge</li><li>Meshy AI</li><li>ElevenLabs</li><li>Deepgram</li><li>You.com</li><li>Tavily</li><li>Nebius</li><li>Kite AI</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <p class="eyebrow reveal">Contact</p>
+      <h2 class="reveal">Building something that should run without you?</h2>
+      <p class="lede reveal" style="max-width:52ch;margin-top:1.3rem;">I'm open to internships, agent-infrastructure work, and hackathon teams that want to ship something unattended by Sunday.</p>
+      <div class="contact__links reveal">
+        <a class="btn btn--primary" href="mailto:Chezzz439@gmail.com">Chezzz439@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/kaushik-chekka-180127238" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/chezzz439-arch" rel="noopener">GitHub</a>
+        <a class="btn" href="https://devpost.com/chezzz439" rel="noopener">Devpost</a>
+        <a class="btn" href="https://www.instagram.com/kaushik.chekka/" rel="noopener">Instagram</a>
+        <a class="btn" href="kaushik-chekka-resume.pdf">Resume</a>
+      </div>
+      <div class="foot">
+        <span>Kaushik Chekka · San Francisco Bay Area</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- scroll reveal ---- */
+  var items = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    items.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    items.forEach(function(el){ io.observe(el); });
+    setTimeout(function(){ items.forEach(function(el){ el.classList.add('in'); }); }, 4000);
+  }
+
+  /* ---- hero run panel ---- */
+  var runs = [
+    {name:'conjure', kind:'voice → printed part',
+     steps:['speech captured','Meshy AI builds model','CuraEngine slices','dispatch to Neptune 4 Pro','part printed']},
+    {name:'sentinel', kind:'policy violation → merged fix',
+     steps:['scan pull request','violation flagged','rewrite in Daytona sandbox','rerun tests until green','security gate passed','auto-merged']},
+    {name:'trading-agent', kind:'filings → position',
+     steps:['ingest SEC EDGAR','run 10 signal phases','score 196 assets','clear the 70 gate','pass risk gates','execute']}
+  ];
+  var stepsEl = document.getElementById('runSteps');
+  var nameEl  = document.getElementById('runName');
+  var kindEl  = document.getElementById('runKind');
+  if(!stepsEl) return;
+
+  function paint(run, animate){
+    stepsEl.innerHTML = '';
+    nameEl.textContent = run.name;
+    kindEl.textContent = run.kind;
+    run.steps.forEach(function(s,i){
+      var li = document.createElement('li');
+      li.className = 'run__step';
+      li.innerHTML = '<span class="n">' + String(i+1).padStart(2,'0') + '</span>' + s;
+      stepsEl.appendChild(li);
+      if(!animate){ li.classList.add('on'); }
+    });
+    var human = document.createElement('li');
+    human.className = 'run__step run__step--human';
+    human.textContent = 'human step: none';
+    stepsEl.appendChild(human);
+  }
+
+  if(reduce){ paint(runs[0], false); return; }
+
+  var idx = 0;
+  function cycle(){
+    var run = runs[idx % runs.length];
+    paint(run, true);
+    var nodes = stepsEl.querySelectorAll('.run__step:not(.run__step--human)');
+    nodes.forEach(function(n,i){
+      setTimeout(function(){ n.classList.add('on'); }, 260 * i + 220);
+    });
+    idx++;
+    setTimeout(cycle, 260 * nodes.length + 3400);
+  }
+  cycle();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    width:1200px;height:630px;overflow:hidden;
+    background:#F4F1EA;color:#14191F;
+    font-family:'Archivo',system-ui,sans-serif;
+    position:relative;
+  }
+  body::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(760px 460px at 88% -10%, rgba(31,92,74,.11), transparent 62%),
+      radial-gradient(600px 420px at 2% 6%, rgba(143,82,21,.085), transparent 60%);
+  }
+  .in{position:relative;height:100%;padding:64px 72px;display:flex;flex-direction:column;justify-content:space-between;}
+  .top{display:flex;align-items:center;gap:14px;
+    font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;letter-spacing:.22em;}
+  .dot{width:12px;height:12px;border-radius:50%;background:#1F5C4A;box-shadow:0 0 0 5px rgba(31,92,74,.16);}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:16px;letter-spacing:.15em;
+    text-transform:uppercase;color:#1F5C4A;margin-top:26px;}
+  h1{font-size:74px;font-weight:800;letter-spacing:-.032em;line-height:1.04;max-width:17ch;margin-top:20px;}
+  h1 em{font-style:normal;color:#1F5C4A;}
+  .rule{height:1px;background:#CFC8BA;margin:0 0 26px;}
+  .stats{display:flex;gap:58px;}
+  .s b{display:block;font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1;}
+  .s b span{color:#1F5C4A;}
+  .s i{display:block;font-style:normal;font-family:'IBM Plex Mono',monospace;
+    font-size:13px;letter-spacing:.13em;text-transform:uppercase;color:#6A716F;margin-top:10px;}
+</style>
+</head>
+<body>
+  <div class="in">
+    <div>
+      <div class="top"><span class="dot"></span>KAUSHIK CHEKKA</div>
+      <div class="sub">Purdue · B.S. Cybersecurity · SF Bay Area</div>
+      <h1>I build agents that <em>finish the job</em> while nobody is watching.</h1>
+    </div>
+    <div>
+      <div class="rule"></div>
+      <div class="stats">
+        <div class="s"><b>8<span>&times;</span></b><i>Hackathon awards</i></div>
+        <div class="s"><b>1,998</b><i>Validated trades</i></div>
+        <div class="s"><b>847<span>K</span></b><i>Events processed</i></div>
+        <div class="s"><b>&lt;100<span>ms</span></b><i>Detection latency</i></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

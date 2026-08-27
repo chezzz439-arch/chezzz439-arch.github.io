@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img" aria-labelledby="t d">
+  <title id="t">Brailed system diagram</title>
+  <desc id="d">Six chorded keys feed an ESP32, which sends characters over a BLE GATT service to an Android app. Plain typing stays on the BLE link. Only command-mode input branches to a Jac and byLLM agent, which performs the phone action. Transcript text returns over BLE to the OLED as captions.</desc>
+
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#666D6B"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#1F5C4A"/>
+    </marker>
+    <marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8F5215"/>
+    </marker>
+    <style>
+      .bx   { fill:#FFFFFF; stroke:#CFC8BA; stroke-width:1; }
+      .bxg  { fill:#FFFFFF; stroke:#1F5C4A; stroke-width:1.4; }
+      .lb   { font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:13px; fill:#14191F; }
+      .an   { font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; fill:#666D6B; letter-spacing:.08em; }
+      .ang  { font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10.5px; fill:#1F5C4A; letter-spacing:.06em; }
+      .ano  { font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; fill:#8F5215; letter-spacing:.08em; }
+      .ln   { stroke:#666D6B; stroke-width:1.2; fill:none; }
+      .lng  { stroke:#1F5C4A; stroke-width:1.3; fill:none; }
+      .lno  { stroke:#8F5215; stroke-width:1.1; fill:none; stroke-dasharray:4 4; }
+    </style>
+  </defs>
+
+  <rect width="720" height="420" fill="#F4F1EA"/>
+
+  <!-- return path: transcript back to the OLED -->
+  <path class="lno" d="M602 56 L602 30 L258 30 L258 52" marker-end="url(#ao)"/>
+  <text class="ano" x="430" y="24" text-anchor="middle">transcript → OLED captions</text>
+
+  <!-- row A -->
+  <rect class="bx" x="16"  y="56" width="140" height="48"/>
+  <text class="lb" x="86"  y="85" text-anchor="middle">six keys</text>
+  <text class="an" x="86"  y="122" text-anchor="middle">6-bit chord</text>
+
+  <rect class="bx" x="188" y="56" width="140" height="48"/>
+  <text class="lb" x="258" y="85" text-anchor="middle">ESP32</text>
+  <text class="an" x="258" y="122" text-anchor="middle">decode on release</text>
+
+  <rect class="bx" x="360" y="56" width="140" height="48"/>
+  <text class="lb" x="430" y="85" text-anchor="middle">BLE GATT</text>
+  <text class="an" x="430" y="122" text-anchor="middle">two characteristics</text>
+
+  <rect class="bx" x="532" y="56" width="140" height="48"/>
+  <text class="lb" x="602" y="85" text-anchor="middle">Android app</text>
+
+  <path class="ln" d="M156 80 L184 80" marker-end="url(#a)"/>
+  <path class="ln" d="M328 80 L356 80" marker-end="url(#a)"/>
+  <path class="ln" d="M500 80 L528 80" marker-end="url(#a)"/>
+
+  <!-- branch -->
+  <path class="ln" d="M602 104 L602 140"/>
+  <path class="lng" d="M602 140 L180 140 L180 172" marker-end="url(#ag)"/>
+  <path class="ln"  d="M602 140 L530 140 L530 172" marker-end="url(#a)"/>
+  <text class="an" x="612" y="132">mode?</text>
+
+  <!-- row B -->
+  <rect class="bxg" x="90"  y="176" width="180" height="48"/>
+  <text class="lb"  x="180" y="205" text-anchor="middle">plain typing</text>
+
+  <rect class="bx"  x="440" y="176" width="180" height="48"/>
+  <text class="lb"  x="530" y="205" text-anchor="middle">command mode</text>
+
+  <!-- left terminal annotation -->
+  <path class="lng" d="M180 224 L180 252"/>
+  <text class="ang" x="180" y="270" text-anchor="middle">never leaves the BLE link</text>
+  <text class="ang" x="180" y="288" text-anchor="middle">no LLM latency</text>
+
+  <!-- right chain -->
+  <path class="ln" d="M530 224 L530 260" marker-end="url(#a)"/>
+  <rect class="bx" x="440" y="264" width="180" height="48"/>
+  <text class="lb" x="530" y="293" text-anchor="middle">Jac + byLLM</text>
+
+  <path class="ln" d="M530 312 L530 348" marker-end="url(#a)"/>
+  <rect class="bx" x="440" y="352" width="180" height="48"/>
+  <text class="lb" x="530" y="381" text-anchor="middle">phone action</text>
+</svg>
