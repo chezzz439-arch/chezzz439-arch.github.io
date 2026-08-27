@@ -85,8 +85,6 @@ p{margin:0 0 1.05em;}
   display:flex;align-items:center;gap:.7rem;margin:0 0 1.4rem;
 }
 .eyebrow::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent);}
-.eyebrow--name{font-weight:700;letter-spacing:.24em;}
-.eyebrow--name::after{display:none;}
 .mono{font-family:var(--mono);}
 
 /* ============================================================
@@ -123,9 +121,10 @@ p{margin:0 0 1.05em;}
    ============================================================ */
 .hero{padding:clamp(3rem,8vw,5.6rem) 0 clamp(2.2rem,5vw,3.2rem);}
 .hero__grid{display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(2.2rem,7vw,5.5rem);align-items:center;}
-.hero h1{max-width:22ch;}
+.hero h1{max-width:none;letter-spacing:-.02em;}
 .hero h1 em{font-style:normal;color:var(--accent);}
-.hero__sub{max-width:56ch;margin-top:1.7rem;}
+.hero__tag{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-top:1.1rem;}
+.hero__sub{max-width:52ch;margin-top:.85rem;}
 .hero__cta{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.1rem;}
 /* mounted print: paper mat + rule around the photo, caption block inside the frame */
 .hero__photo{
@@ -159,57 +158,20 @@ p{margin:0 0 1.05em;}
 .btn--primary{background:var(--accent);border-color:var(--accent);color:#F4F1EA;font-weight:600;}
 .btn--primary:hover,.btn--primary:focus-visible{background:var(--accent-dark);border-color:var(--accent-dark);color:#F4F1EA;}
 
-/* --- signature: the run panel --- */
-.run{
-  margin-top:clamp(2.4rem,5.5vw,3.6rem);
-  border:1px solid var(--line);
-  background:var(--card);
-  position:relative;overflow:hidden;
-}
-.run__bar{
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:.7rem 1rem;border-bottom:1px solid var(--line-soft);background:var(--paper-2);
-  font-family:var(--mono);font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
-}
-.run__id{display:flex;align-items:center;gap:.6rem;color:var(--ink);}
-.run__live{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.9s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(31,92,74,.45);}50%{opacity:.55;box-shadow:0 0 0 6px rgba(31,92,74,0);}}
-.run__body{padding:clamp(1.1rem,3vw,1.7rem) clamp(1rem,3vw,1.7rem) clamp(1.2rem,3vw,1.6rem);}
-.run__steps{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:stretch;gap:.5rem;}
-.run__step{
-  font-family:var(--mono);font-size:.78rem;letter-spacing:.01em;
-  border:1px solid var(--line-soft);padding:.55rem .8rem;color:var(--dim-2);
-  display:flex;align-items:center;gap:.5rem;background:var(--paper-2);
-  opacity:0;transform:translateY(5px);transition:opacity .34s ease,transform .34s ease,color .34s,border-color .34s;
-}
-.run__step.on{opacity:1;transform:none;color:var(--ink);border-color:rgba(31,92,74,.45);}
-.run__step .n{color:var(--accent);font-size:.66rem;}
-.run__step--human{
-  border-style:dashed;border-color:rgba(143,82,21,.5);color:var(--signal);
-  opacity:1;transform:none;background:rgba(143,82,21,.05);
-}
-.run__foot{
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:.45rem .9rem;
-  margin-top:1.15rem;padding-top:1rem;border-top:1px dashed var(--line);
-  font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.06em;
-}
-.run__foot b{color:var(--signal);font-weight:600;font-size:.95rem;}
-.run__note{font-family:var(--body);font-size:.95rem;color:var(--muted);letter-spacing:0;}
-
 /* ============================================================
    LEDGER
    ============================================================ */
 .ledger{border-block:1px solid var(--line);margin-top:clamp(2.4rem,5.5vw,3.6rem);background:var(--paper-2);}
-.ledger__grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.ledger__grid{display:grid;grid-template-columns:repeat(2,1fr);max-width:600px;}
 .ledger__cell{padding:clamp(1.3rem,3vw,1.9rem) clamp(.7rem,2vw,1.4rem);border-left:1px solid var(--line-soft);}
 .ledger__cell:first-child{border-left:0;padding-left:0;}
 .ledger__n{font-family:var(--display);font-size:clamp(1.6rem,1.15rem + 1.8vw,2.55rem);font-weight:400;letter-spacing:-.03em;line-height:1;}
 .ledger__n span{color:var(--accent);}
 .ledger__l{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--dim-2);margin-top:.6rem;display:block;line-height:1.5;}
-@media(max-width:700px){
-  .ledger__grid{grid-template-columns:repeat(2,1fr);}
-  .ledger__cell:nth-child(3){border-left:0;padding-left:0;}
-  .ledger__cell:nth-child(-n+2){border-bottom:1px solid var(--line-soft);}
+@media(max-width:480px){
+  .ledger__grid{grid-template-columns:1fr;}
+  .ledger__cell{border-left:0;padding-left:0;}
+  .ledger__cell:first-child{border-bottom:1px solid var(--line-soft);}
 }
 
 /* ============================================================
@@ -414,10 +376,9 @@ html.js .reveal.in{opacity:1;transform:none;}
   html{scroll-behavior:auto;}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
   html.js .reveal{opacity:1;transform:none;}
-  .run__step{opacity:1;transform:none;}
 }
 @media print{
-  .nav,.run,body::before{display:none!important;}
+  .nav,body::before{display:none!important;}
   body{background:#fff;}
   .story__body{display:block;}
 }
@@ -476,9 +437,9 @@ html.js .reveal.in{opacity:1;transform:none;}
     <div class="wrap">
       <div class="hero__grid">
         <div>
-          <p class="eyebrow eyebrow--name">Kaushik Chekka</p>
-          <h1>I like building things that <em>ship</em> and keep running when nobody is watching.</h1>
-          <p class="lede hero__sub">B.S. Cybersecurity student at Purdue University, based in the San Francisco Bay Area. I build autonomous agents across quant finance, security, and accessibility. I also run a clothing brand.</p>
+          <h1>Kaushik Chekka</h1>
+          <p class="hero__tag">Autonomous agents &middot; Quant finance &middot; Security</p>
+          <p class="lede hero__sub">B.S. Cybersecurity at Purdue University, based in the San Francisco Bay Area.</p>
           <div class="hero__cta">
             <a class="btn btn--primary" href="#work">See the work</a>
             <a class="btn" href="kaushik-chekka-resume.pdf">Download resume</a>
@@ -491,26 +452,10 @@ html.js .reveal.in{opacity:1;transform:none;}
           <img src="images/kaushik.jpg" width="1400" height="933" alt="Portrait of Kaushik Chekka in a suit, outdoors" />
           <figcaption>
             <span class="hero__now">Right now</span>
-            Just placed 2nd for Social Impact at JacHacks SF with <strong>Brailed</strong>, a phone-mounted six-key Braille keyboard running on an ESP32 over BLE, with a Jac and byLLM agent behind command mode.
+            2nd for Social Impact at JacHacks SF with <strong>Brailed</strong>, a phone-mounted Braille keyboard.
           </figcaption>
         </figure>
       </div>
-
-      <!-- signature element: the run panel -->
-      <section class="run" aria-label="Example agent run">
-        <div class="run__bar">
-          <span class="run__id"><span class="run__live" aria-hidden="true"></span><span id="runName">conjure</span></span>
-          <span id="runKind">voice → printed part</span>
-        </div>
-        <div class="run__body">
-          <ol class="run__steps" id="runSteps"></ol>
-          <div class="run__foot">
-            <span>human steps after the prompt</span>
-            <b>0</b>
-            <span class="run__note">That number is the point of everything below.</span>
-          </div>
-        </div>
-      </section>
     </div>
   </header>
 
@@ -521,14 +466,6 @@ html.js .reveal.in{opacity:1;transform:none;}
         <div class="ledger__cell">
           <div class="ledger__n">8<span>×</span></div>
           <span class="ledger__l">Hackathon awards<br>across 6 events</span>
-        </div>
-        <div class="ledger__cell">
-          <div class="ledger__n">1,998</div>
-          <span class="ledger__l">Trades in the<br>permutation test</span>
-        </div>
-        <div class="ledger__cell">
-          <div class="ledger__n">847<span>K</span></div>
-          <span class="ledger__l">Behavioral events<br>processed by VIGIL</span>
         </div>
         <div class="ledger__cell">
           <div class="ledger__n">$13<span>K+</span></div>
@@ -1305,51 +1242,6 @@ html.js .reveal.in{opacity:1;transform:none;}
     setTimeout(function(){ items.forEach(function(el){ el.classList.add('in'); }); }, 4000);
   }
 
-  /* ---- hero run panel ---- */
-  var runs = [
-    {name:'conjure', kind:'voice → printed part',
-     steps:['speech captured','Meshy AI builds model','CuraEngine slices','dispatch to Neptune 4 Pro','part printed']},
-    {name:'sentinel', kind:'policy violation → merged fix',
-     steps:['scan pull request','violation flagged','rewrite in Daytona sandbox','rerun tests until green','security gate passed','auto-merged']},
-    {name:'trading-agent', kind:'filings → position',
-     steps:['ingest SEC EDGAR','run 10 signal phases','score 196 assets','clear the 70 gate','pass risk gates','execute']}
-  ];
-  var stepsEl = document.getElementById('runSteps');
-  var nameEl  = document.getElementById('runName');
-  var kindEl  = document.getElementById('runKind');
-  if(!stepsEl) return;
-
-  function paint(run, animate){
-    stepsEl.innerHTML = '';
-    nameEl.textContent = run.name;
-    kindEl.textContent = run.kind;
-    run.steps.forEach(function(s,i){
-      var li = document.createElement('li');
-      li.className = 'run__step';
-      li.innerHTML = '<span class="n">' + String(i+1).padStart(2,'0') + '</span>' + s;
-      stepsEl.appendChild(li);
-      if(!animate){ li.classList.add('on'); }
-    });
-    var human = document.createElement('li');
-    human.className = 'run__step run__step--human';
-    human.textContent = 'human step: none';
-    stepsEl.appendChild(human);
-  }
-
-  if(reduce){ paint(runs[0], false); return; }
-
-  var idx = 0;
-  function cycle(){
-    var run = runs[idx % runs.length];
-    paint(run, true);
-    var nodes = stepsEl.querySelectorAll('.run__step:not(.run__step--human)');
-    nodes.forEach(function(n,i){
-      setTimeout(function(){ n.classList.add('on'); }, 260 * i + 220);
-    });
-    idx++;
-    setTimeout(cycle, 260 * nodes.length + 3400);
-  }
-  cycle();
 })();
 </script>
 </body>
