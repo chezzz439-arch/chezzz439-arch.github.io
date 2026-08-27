@@ -288,6 +288,9 @@ p{margin:0 0 1.05em;}
 .also__meta a:hover,.also__meta a:focus-visible{text-decoration:underline;}
 .also{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;margin-top:clamp(1.6rem,3.5vw,2.2rem);}
 .also__item{border:1px solid var(--line-soft);background:var(--card);padding:1.4rem;}
+.also__item--fig{grid-column:span 2;display:grid;grid-template-columns:1.15fr 1fr;gap:1.3rem;align-items:start;}
+.also__item--fig img{grid-row:1/span 3;width:100%;height:auto;display:block;border:1px solid var(--line-soft);background:var(--paper-2);}
+@media(max-width:760px){.also__item--fig{grid-column:span 1;grid-template-columns:1fr;}.also__item--fig img{grid-row:auto;}}
 .also__item h4{font-family:var(--display);font-size:1.18rem;font-weight:400;letter-spacing:-.015em;margin-bottom:.3rem;}
 .also__meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);display:block;margin-bottom:.7rem;}
 .also__item p{margin:0;font-size:1.06rem;color:#2B3134;line-height:1.6;}
@@ -718,7 +721,8 @@ html.js .reveal.in{opacity:1;transform:none;}
         <p>Shipped, running, or in progress. Depth lives in the repos.</p>
       </div>
       <div class="also reveal">
-        <div class="also__item" id="p-conjure">
+        <div class="also__item also__item--fig" id="p-conjure">
+          <img src="images/conjure-kiosk.jpg" width="1200" height="663" loading="lazy" alt="The Conjure kiosk screen: two modes, Speak or type for a quick model and Engineer a part for a dimensioned build, over a pipeline strip reading describe, generate, inspect, print." />
           <h4>Conjure &amp; Morph-Forge</h4>
           <span class="also__meta">Orange Pi 5 Pro &middot; Meshy AI &middot; OpenSCAD &middot; <a href="https://github.com/chezzz439-arch/Conjure" rel="noopener">GitHub &#8599;</a></span>
           <p>Speak a description, walk away, pick up the printed part. A walk-up kiosk plus an agent that writes parametric OpenSCAD against real material specs before it commits to a print.</p>
