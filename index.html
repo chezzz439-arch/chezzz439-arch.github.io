@@ -202,12 +202,6 @@ p{margin:0 0 1.05em;}
 .proj__idx{font-family:var(--mono);font-size:.72rem;color:var(--dim-2);letter-spacing:.1em;padding-top:.45rem;}
 .proj__title{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem .9rem;}
 .proj__lang{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim-2);}
-.jump{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 clamp(2rem,4vw,3rem);
-  padding-bottom:clamp(1.4rem,3vw,2rem);border-bottom:1px solid var(--line-soft);}
-.jump a{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--dim-2);text-decoration:none;border:1px solid var(--line-soft);background:var(--card);
-  padding:.44rem .7rem;transition:color .18s,border-color .18s;}
-.jump a:hover,.jump a:focus-visible{color:var(--accent);border-color:var(--accent);}
 .proj__sum{margin:.85rem 0 0;color:#272D31;max-width:64ch;font-size:clamp(1.14rem,1rem + .55vw,1.34rem);line-height:1.58;font-weight:500;}
 .badge{
   font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
@@ -287,7 +281,12 @@ p{margin:0 0 1.05em;}
 .credit{margin-top:.9rem;font-size:.88rem;color:var(--dim-2);font-family:var(--mono);letter-spacing:.02em;}
 
 /* also built */
-.also{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;margin-top:clamp(2.2rem,5vw,3.2rem);}
+.also__head{margin-top:clamp(3rem,6vw,4.5rem);padding-top:clamp(2rem,4vw,2.8rem);border-top:1px solid var(--line);}
+.also__head h3{font-size:clamp(1.5rem,1.2rem+1vw,2rem);}
+.also__head p{margin-top:.5rem;color:var(--muted);max-width:52ch;}
+.also__meta a{color:var(--accent);text-decoration:none;}
+.also__meta a:hover,.also__meta a:focus-visible{text-decoration:underline;}
+.also{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem;margin-top:clamp(1.6rem,3.5vw,2.2rem);}
 .also__item{border:1px solid var(--line-soft);background:var(--card);padding:1.4rem;}
 .also__item h4{font-family:var(--display);font-size:1.18rem;font-weight:400;letter-spacing:-.015em;margin-bottom:.3rem;}
 .also__meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim-2);display:block;margin-bottom:.7rem;}
@@ -501,11 +500,10 @@ html.js .reveal.in{opacity:1;transform:none;}
     <div class="wrap">
       <div class="sec__head reveal">
         <p class="eyebrow">Selected work</p>
-        <h2>Ten systems, judged on what they do unattended.</h2>
-        <p>Every card shows the pipeline as it actually runs.</p>
+        <h2>Four systems, judged on what they do unattended.</h2>
+        <p>Each one shows the pipeline as it actually runs. Everything else is listed below.</p>
       </div>
 
-      <nav class="jump reveal" aria-label="Jump to a project"><a href="#p-brailed">Brailed</a><a href="#p-trading-agent">Trading Agent</a><a href="#p-conjure">Conjure</a><a href="#p-assistview">AssistView</a><a href="#p-windtunnel">windtunnel</a><a href="#p-er-oracle">ER Oracle</a><a href="#p-foundrycoach">FoundryCoach</a><a href="#p-sentinel">Sentinel</a><a href="#p-vigil">VIGIL</a><a href="#p-dealghost">DealGhost</a></nav>
 
       <div class="proj">
 
@@ -624,273 +622,16 @@ html.js .reveal.in{opacity:1;transform:none;}
           </details>
         </article>
 
-        <!-- Conjure + Morph-Forge -->
-        <article class="proj__item reveal" id="p-conjure">
-          <div class="proj__top">
-            <span class="proj__idx">03</span>
-            <div>
-              <div class="proj__title">
-                <h3>Conjure &amp; Morph-Forge</h3>
-                <span class="proj__lang">Voice &amp; agent → 3D print</span>
-                <span class="badge">No human after the first press</span>
-              </div>
-              <p class="proj__sum">Speak a description, walk away, pick up a printed part. Nobody is in the loop after the first button press. Conjure is the kiosk; Morph-Forge is the engineering agent behind it.</p>
-              <p class="chain-label">Kiosk: anyone walks up</p>
-              <ol class="chain">
-                <li>speak it</li><li>Meshy AI model</li><li>Three.js preview</li><li>slice</li><li>USB → Neptune 4 Pro</li>
-              </ol>
-              <p class="chain-label">Morph-Forge: the engineering agent</p>
-              <ol class="chain">
-                <li>Kite AI auth</li><li>You.com + Tavily specs</li><li>Llama-70B writes OpenSCAD</li><li>render + slice</li><li>Moonraker dispatch</li><li>structural review</li>
-              </ol>
-            </div>
-            <a class="proj__link" href="https://github.com/chezzz439-arch/Conjure" rel="noopener">GitHub ↗</a>
-          </div>
-          <details class="story">
-            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
-            <div class="story__body">
-              <div class="story__col">
-                <h5>Two paths, one printer</h5>
-                <p>The kiosk runs on an Orange Pi 5 Pro: hold the mic, describe an object, and Meshy returns a model that spins in Three.js while ElevenLabs narrates. Morph-Forge takes the harder route. It looks up real pipe dimensions and PLA tensile figures with citations first, so Llama-3.3-70B writes parametric OpenSCAD against measured numbers rather than hallucinated ones, then reviews its own output before printing.</p>
-              </div>
-              <div class="story__col">
-                <h5>The failure mode I documented instead of hiding</h5>
-                <p>Both modes write to the same scratch gcode path, so a second kiosk tab wipes a finished build. Instead of papering over it, the export endpoint re-checks the file on disk rather than trusting an in-memory flag. The failure surfaces as a clean 409, never as a USB stick holding the wrong object. The real fix is per-build paths, and the README says it's deferred.</p>
-              </div>
-              <div class="story__col">
-                <h5>Built with</h5>
-                <div class="tags"><span class="tag">Orange Pi 5 Pro</span><span class="tag">Meshy AI</span><span class="tag">Three.js</span><span class="tag">OpenSCAD</span><span class="tag">CuraEngine</span><span class="tag">OrcaSlicer</span><span class="tag">Moonraker</span><span class="tag">Nebius Llama-3.3-70B</span><span class="tag">You.com</span><span class="tag">Tavily</span><span class="tag">ElevenLabs</span><span class="tag">InsForge</span><span class="tag">Kite AI</span><span class="tag">Topify</span></div>
-              </div>
-            </div>
-          </details>
-        </article>
 
-        <!-- AssistView -->
-        <article class="proj__item reveal" id="p-assistview">
-          <div class="proj__top">
-            <span class="proj__idx">04</span>
-            <div>
-              <div class="proj__title">
-                <h3>AssistView</h3>
-                <span class="proj__lang">React Native · On-device CV</span>
-                <span class="badge badge--award">Live</span>
-              </div>
-              <p class="proj__sum">One app, any camera, every disability. Four modes on one pipeline: hazard callouts for blind users, face recall before a dementia patient has to guess, step-by-step task coaching, and read-aloud for anything you point at.</p>
-              <ol class="chain chain--none">
-                <li>camera</li><li>YOLOv8n on-device @ 30fps</li><li>instant hazard alert</li><li>Claude Sonnet every 4s</li><li>spoken description</li>
-              </ol>
-              <div class="proj__media">
-                <figure class="proj__fig">
-                  <img src="images/assistview.jpg" width="1200" height="573" loading="lazy" alt="AssistView in Task Coach mode, offering step-by-step guidance for daily tasks with quick-start options such as making breakfast and taking medication." />
-                  <figcaption>Task Coach, running as a guest. The four modes sit in one nav: Navigate, Memory, Coach, Reader.</figcaption>
-                </figure>
-              </div>
-            </div>
-            <a class="proj__link" href="https://assistview.butterbase.dev" rel="noopener">Live ↗</a>
-          </div>
-          <details class="story">
-            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
-            <div class="story__body">
-              <div class="story__col">
-                <h5>Two loops at two speeds</h5>
-                <p>Safety can't wait on a network round trip, but a useful description of a room needs a real model. So YOLOv8n runs on-device at 30fps for "person ahead" and "step down," while Claude Sonnet 4.6 narrates the wider scene every four seconds. The fast loop keeps you from walking into something; the slow loop tells you where you are.</p>
-              </div>
-              <div class="story__col">
-                <h5>Memory mode</h5>
-                <p>Face recognition here isn't surveillance. It is context delivered before a conversation starts, pulled from saved notes and recent history, so a dementia patient isn't left searching for the name of someone they love.</p>
-              </div>
-              <div class="story__col">
-                <h5>Built with</h5>
-                <div class="tags"><span class="tag">React Native</span><span class="tag">Expo SDK 56</span><span class="tag">React 18 + Vite</span><span class="tag">YOLOv8n TFLite</span><span class="tag">Claude Sonnet 4.6</span><span class="tag">Butterbase</span><span class="tag">vision-camera</span></div>
-                <p class="credit">Built at the Beta Fund × Antler Hackathon. Architected for Meta Ray-Ban glasses as a hands-free camera; SDK bridge is in the repo.</p>
-                <p style="margin-top:.5rem;font-size:.9rem;">
-                  <a href="https://github.com/chezzz439-arch/assistview" rel="noopener" style="color:var(--accent);">GitHub ↗</a>
-                </p>
-              </div>
-            </div>
-          </details>
-        </article>
 
-        <!-- windtunnel -->
-        <article class="proj__item reveal" id="p-windtunnel">
-          <div class="proj__top">
-            <span class="proj__idx">05</span>
-            <div>
-              <div class="proj__title">
-                <h3>windtunnel</h3>
-                <span class="proj__lang">TypeScript · Dev tooling</span>
-                <span class="badge badge--wip">Early development</span>
-              </div>
-              <p class="proj__sum">Diffs show what the text says. windtunnel runs the baseline and the candidate against the same inputs and reports what actually changed, for when an agent just rewrote 1,400 lines you have to merge.</p>
-              <ol class="chain">
-                <li>two git worktrees</li><li>build input envelope</li><li>run baseline twice</li><li>subtract noise floor</li><li>canonical diff</li><li>report</li>
-              </ol>
-            </div>
-            <a class="proj__link" href="https://github.com/chezzz439-arch/windtunnel" rel="noopener">GitHub ↗</a>
-          </div>
-          <details class="story">
-            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
-            <div class="story__body">
-              <div class="story__col">
-                <h5>Run it three times, not twice</h5>
-                <p>The baseline runs twice under a determinism harness: seeded RNG, frozen clock, replayed network. Anything that differs between two runs of identical code is noise. That measured noise floor is subtracted before the candidate is compared at all, so what survives is signal. If the floor is too large to trust, windtunnel refuses to emit a report.</p>
-              </div>
-              <div class="story__col">
-                <h5>Honesty is the product</h5>
-                <p>The README lists what it can't do before what it can. It doesn't prove equivalence. General behavioral equivalence is undecidable, so "unchanged" always means "unchanged on these inputs," never "unchanged, period," and every report states its envelope. It doesn't review style, architecture, or security. Plenty of tools read the text; this one only runs it.</p>
-              </div>
-              <div class="story__col">
-                <h5>Where it fits</h5>
-                <ul>
-                  <li>A Claude Code Stop hook lets the agent read its own behavioral delta and fix unintended changes before a human ever sees them</li>
-                  <li>A GitHub Action posts one PR comment per push with the measured delta</li>
-                  <li>Reports separate intended deltas from likely-unintended ones, with baseline and candidate output attached</li>
-                </ul>
-                <div class="tags" style="margin-top:1rem;"><span class="tag">TypeScript</span><span class="tag">Node 20</span><span class="tag">git worktree</span><span class="tag">Vitest</span><span class="tag">execa</span><span class="tag">fast-check</span><span class="tag">GitHub Actions</span></div>
-              </div>
-            </div>
-          </details>
-        </article>
 
-        <!-- ER Wait Oracle -->
-        <article class="proj__item reveal" id="p-er-oracle">
-          <div class="proj__top">
-            <span class="proj__idx">06</span>
-            <div>
-              <div class="proj__title">
-                <h3>ER Wait Oracle</h3>
-                <span class="proj__lang">TypeScript / Node</span>
-                <span class="badge">Runs hourly, unattended</span>
-                <span class="badge badge--award">Live</span>
-              </div>
-              <p class="proj__sum">There is no public real-time ER wait feed in the US. The Oracle predicts which San Francisco ER will be least busy over the next four hours using only signals that <em>are</em> public, and says plainly that is what it is doing.</p>
-              <ol class="chain">
-                <li>CMS baselines</li><li>Open-Meteo live weather</li><li>ClickHouse</li><li>Claude forced tool-use</li><li>0–100 busy score</li><li>ranked outlook</li>
-              </ol>
-              <div class="proj__media">
-                <figure class="proj__fig">
-                  <img src="images/er-oracle.jpg" width="1400" height="913" loading="lazy" alt="ER Wait Oracle showing San Francisco emergency rooms on a map, with Chinese Hospital ranked best right now at a busy score of 21 out of 100, 1.9 miles away." />
-                  <figcaption>Live in San Francisco. The pick carries its own reasoning: distance, predicted load, and typical visit length.</figcaption>
-                </figure>
-              </div>
-            </div>
-            <a class="proj__link" href="https://er-wait-oracle.vercel.app" rel="noopener">Live ↗</a>
-          </div>
-          <details class="story">
-            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
-            <div class="story__body">
-              <div class="story__col">
-                <h5>The problem</h5>
-                <p>The obvious data source doesn't exist. Instead of faking it, the Oracle fuses three public signals: CMS <em>Timely &amp; Effective Care</em> gives each ER a stable character (volume tier, median throughput, percentage of patients who leave without being seen), while live Open-Meteo weather and time-of-week supply everything that actually varies hour to hour.</p>
-              </div>
-              <div class="story__col">
-                <h5>How it runs</h5>
-                <ul>
-                  <li>An hourly cron snapshots all three signals into append-only ClickHouse MergeTree tables, so the real history is the accumulating forecast log</li>
-                  <li>Claude anchors each ER to its CMS baseline, then adjusts for current weather and time to produce a calibrated score with reasoning and key factors</li>
-                  <li>A forced <code>submit_predictions</code> tool call keeps output structured, with no brittle JSON parsing</li>
-                  <li>Prompt caching on the identical hourly system prompt; the run log prints cache-read and input token counts so you can watch it working</li>
-                </ul>
-              </div>
-              <div class="story__col">
-                <h5>Built with</h5>
-                <div class="tags"><span class="tag">TypeScript</span><span class="tag">Node 20 ESM</span><span class="tag">ClickHouse</span><span class="tag">Anthropic SDK</span><span class="tag">node-cron</span><span class="tag">Docker</span><span class="tag">CMS data</span><span class="tag">Open-Meteo</span></div>
-                <p style="margin-top:.9rem;font-size:.9rem;">
-                  <a href="https://github.com/chezzz439-arch/er-wait-oracle" rel="noopener" style="color:var(--accent);">GitHub ↗</a>
-                </p>
-              </div>
-            </div>
-          </details>
-        </article>
 
-        <!-- FoundryCoach -->
-        <article class="proj__item reveal" id="p-foundrycoach">
-          <div class="proj__top">
-            <span class="proj__idx">07</span>
-            <div>
-              <div class="proj__title">
-                <h3>FoundryCoach</h3>
-                <span class="proj__lang">Next.js · Fastify · Deepgram</span>
-                <span class="badge badge--wip">Private repo · in development</span>
-              </div>
-              <p class="proj__sum">A meeting coach for founders: live nudges during investor pitches and sales calls, then the analysis and the next prep brief. The hard part is not the transcript. It is being useful inside two seconds.</p>
-              <ol class="chain">
-                <li>Chrome MV3 capture</li><li>Deepgram live transcript</li><li>WebSocket to Fastify</li><li>in-meeting nudge</li><li>BullMQ post-job</li><li>next-meeting brief</li>
-              </ol>
-            </div>
-          </div>
-          <details class="story">
-            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
-            <div class="story__body">
-              <div class="story__col">
-                <h5>Two clocks, again</h5>
-                <p>The same split as AssistView: a live path that answers inside the moment, a deep path that can afford to think. Streaming transcription goes over a WebSocket into Fastify for the nudge; the expensive analysis queues into BullMQ and runs after everyone hangs up. One path for both makes the coaching too slow and the analysis too shallow.</p>
-              </div>
-              <div class="story__col">
-                <h5>The distribution problem</h5>
-                <p>Chrome derives a sideloaded extension's ID from a public key in its manifest. Left alone, that ID changes on every rebuild and every machine, breaking the web app's handshake. Generating the RSA keypair once and pinning the public key keeps it stable everywhere: an unglamorous detail that decides whether the product installs at all.</p>
-              </div>
-              <div class="story__col">
-                <h5>How it's laid out</h5>
-                <ul>
-                  <li>pnpm monorepo: <code>apps/web</code> Next.js 15, <code>apps/api</code> Fastify, <code>apps/extension</code> Vite + CRXJS</li>
-                  <li><code>packages/shared</code> holds Zod schemas and prompts so the extension and server can't drift on message shape</li>
-                  <li>Postgres with pgvector via Supabase, for retrieval over past meetings</li>
-                </ul>
-              </div>
-              <div class="story__col">
-                <h5>Built with</h5>
-                <div class="tags"><span class="tag">Next.js 15</span><span class="tag">Fastify</span><span class="tag">Deepgram</span><span class="tag">Anthropic SDK</span><span class="tag">BullMQ</span><span class="tag">Redis</span><span class="tag">Supabase</span><span class="tag">pgvector</span><span class="tag">Vite + CRXJS</span><span class="tag">Zod</span><span class="tag">Tailwind</span><span class="tag">shadcn/ui</span></div>
-              </div>
-            </div>
-          </details>
-        </article>
 
-        <!-- Sentinel -->
-        <article class="proj__item reveal" id="p-sentinel">
-          <div class="proj__top">
-            <span class="proj__idx">08</span>
-            <div>
-              <div class="proj__title">
-                <h3>Sentinel</h3>
-                <span class="proj__lang">Autonomous compliance</span>
-                <span class="badge">No human in the loop</span>
-                <span class="badge badge--wip">Private repo</span>
-              </div>
-              <p class="proj__sum">Catches a security-policy violation in a pull request, rewrites the code in a sandbox, reruns the tests until they pass, and merges. The reviewer finds out from Slack.</p>
-              <ol class="chain">
-                <li>scan PR</li><li>flag violation</li><li>rewrite in Daytona</li><li>rerun tests</li><li>security gate</li><li>auto-merge</li>
-              </ol>
-            </div>
-          </div>
-          <details class="story">
-            <summary><span class="chev" aria-hidden="true">▸</span>Read the build story</summary>
-            <div class="story__body">
-              <div class="story__col">
-                <h5>What it does</h5>
-                <p>Sentinel treats a policy violation as a task rather than a ticket. It detects the violation, fixes it inside an isolated Daytona sandbox, and only merges once the test suite comes back green.</p>
-              </div>
-              <div class="story__col">
-                <h5>How it runs</h5>
-                <ul>
-                  <li>Sandboxed rewrite loop: retest, don't trust the first patch</li>
-                  <li>An Opsera security gate stands between the fix and the merge</li>
-                  <li>Slack alerts keep the team informed without blocking the run</li>
-                </ul>
-              </div>
-              <div class="story__col">
-                <h5>Built with</h5>
-                <div class="tags"><span class="tag">Claude</span><span class="tag">Daytona</span><span class="tag">Opsera</span><span class="tag">Slack</span><span class="tag">CI</span></div>
-                <p class="credit">Built at the Applied Intelligence Hackathon, 3rd of 600+.</p>
-              </div>
-            </div>
-          </details>
-        </article>
 
         <!-- VIGIL -->
         <article class="proj__item reveal" id="p-vigil">
           <div class="proj__top">
-            <span class="proj__idx">09</span>
+            <span class="proj__idx">03</span>
             <div>
               <div class="proj__title">
                 <h3>VIGIL</h3>
@@ -931,7 +672,7 @@ html.js .reveal.in{opacity:1;transform:none;}
         <!-- DealGhost -->
         <article class="proj__item reveal" id="p-dealghost">
           <div class="proj__top">
-            <span class="proj__idx">10</span>
+            <span class="proj__idx">04</span>
             <div>
               <div class="proj__title">
                 <h3>DealGhost</h3>
@@ -972,21 +713,55 @@ html.js .reveal.in{opacity:1;transform:none;}
       </div>
 
       <!-- also built -->
+      <div class="also__head reveal">
+        <h3>Also built</h3>
+        <p>Shipped, running, or in progress. Depth lives in the repos.</p>
+      </div>
       <div class="also reveal">
-        <div class="also__item">
-          <h4>Meeting Ghost</h4>
-          <span class="also__meta">Node · AppleScript · macOS</span>
-          <p>Watches Apple Calendar and, minutes before each meeting, fires a native notification with a researched three-bullet prep brief. Claude does the research with web search; a dedupe file means you get briefed once per meeting, not once per poll.</p>
+        <div class="also__item" id="p-conjure">
+          <h4>Conjure &amp; Morph-Forge</h4>
+          <span class="also__meta">Orange Pi 5 Pro &middot; Meshy AI &middot; OpenSCAD &middot; <a href="https://github.com/chezzz439-arch/Conjure" rel="noopener">GitHub &#8599;</a></span>
+          <p>Speak a description, walk away, pick up the printed part. A walk-up kiosk plus an agent that writes parametric OpenSCAD against real material specs before it commits to a print.</p>
+        </div>
+        <div class="also__item" id="p-assistview">
+          <h4>AssistView</h4>
+          <span class="also__meta">React Native &middot; On-device CV &middot; <a href="https://assistview.butterbase.dev" rel="noopener">Live &#8599;</a> &middot; <a href="https://github.com/chezzz439-arch/assistview" rel="noopener">GitHub &#8599;</a></span>
+          <p>One app, any camera, four accessibility modes on a single pipeline: hazard callouts, face recall, task coaching, and read-aloud.</p>
+        </div>
+        <div class="also__item" id="p-er-oracle">
+          <h4>ER Wait Oracle</h4>
+          <span class="also__meta">TypeScript &middot; ClickHouse &middot; Claude &middot; <a href="https://er-wait-oracle.vercel.app" rel="noopener">Live &#8599;</a> &middot; <a href="https://github.com/chezzz439-arch/er-wait-oracle" rel="noopener">GitHub &#8599;</a></span>
+          <p>No public real-time ER wait feed exists in the US, so it predicts which San Francisco ER will be least busy four hours out using only signals that are public. Runs hourly, unattended.</p>
+        </div>
+        <div class="also__item" id="p-sentinel">
+          <h4>Sentinel</h4>
+          <span class="also__meta">Autonomous compliance &middot; Private repo</span>
+          <p>Catches a security-policy violation in a pull request, rewrites the code in a sandbox, reruns the tests until they pass, and merges. The reviewer finds out from Slack.</p>
+        </div>
+        <div class="also__item" id="p-windtunnel">
+          <h4>windtunnel</h4>
+          <span class="also__meta">TypeScript &middot; Dev tooling &middot; <a href="https://github.com/chezzz439-arch/windtunnel" rel="noopener">GitHub &#8599;</a></span>
+          <p>A behavioral diff. Runs the baseline and the candidate against the same inputs and reports what actually changed, for when an agent just rewrote 1,400 lines you have to merge.</p>
+        </div>
+        <div class="also__item" id="p-foundrycoach">
+          <h4>FoundryCoach</h4>
+          <span class="also__meta">Next.js &middot; Fastify &middot; Deepgram &middot; In development</span>
+          <p>A meeting coach for founders: live nudges during investor pitches, then the analysis and the next prep brief. The hard part is being useful inside two seconds.</p>
         </div>
         <div class="also__item">
           <h4>Arcus storefront</h4>
-          <span class="also__meta">React · Supabase · <a href="https://www.arcuswear.store" rel="noopener" style="color:var(--accent);">arcuswear.store ↗</a></span>
-          <p>The store behind my clothing brand, built from scratch instead of reaching for Shopify: real accounts, passkey sign-in, a cart that survives sign-out. It has processed $13K+ in orders. E-commerce is a different discipline: every bug here costs actual money.</p>
+          <span class="also__meta">React &middot; Supabase &middot; <a href="https://www.arcuswear.store" rel="noopener">arcuswear.store &#8599;</a></span>
+          <p>The store behind my clothing brand, built from scratch instead of reaching for Shopify: real accounts, passkey sign-in, a cart that survives sign-out. $13K+ in orders.</p>
+        </div>
+        <div class="also__item">
+          <h4>Meeting Ghost</h4>
+          <span class="also__meta">Node &middot; AppleScript &middot; macOS</span>
+          <p>Watches Apple Calendar and fires a researched three-bullet prep brief minutes before each meeting, once per meeting rather than once per poll.</p>
         </div>
         <div class="also__item">
           <h4>Semester Board</h4>
-          <span class="also__meta">FastAPI · SQLite · ICS</span>
-          <p>One board that answers where I need to be and what's due, reconciling Brightspace and Outlook calendar feeds with manual capture. Feed URLs are secrets, so they never leave <code style="font-family:var(--mono);font-size:.85em;">.env</code>. Still early: the sync loop and schema are done, real feeds are still being wired.</p>
+          <span class="also__meta">FastAPI &middot; SQLite &middot; ICS</span>
+          <p>One board reconciling Brightspace and Outlook feeds into what is due and where I need to be. Sync loop and schema are done; real feeds are still being wired.</p>
         </div>
       </div>
     </div>
